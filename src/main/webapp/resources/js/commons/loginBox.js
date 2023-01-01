@@ -1,3 +1,6 @@
+/**
+ *
+ */
 window.addEventListener("DOMContentLoaded", function () {
     $('#idInput').keypress(function (e) {
 
@@ -42,7 +45,6 @@ window.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-
     $("#logoutButton").click(function () {
 
         $.ajax({

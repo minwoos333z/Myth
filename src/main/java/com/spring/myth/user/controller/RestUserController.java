@@ -82,7 +82,8 @@ public class RestUserController {
         return data;
     }
 
-    public HashMap<String, Object> userLoginParocess(UserVo param, HttpSession session) {
+    @RequestMapping(value = "userLoginProcess")
+    public HashMap<String, Object> userLoginProcess(UserVo param, HttpSession session) {
 
         HashMap<String, Object> data = new HashMap<String, Object>();
 
@@ -103,6 +104,7 @@ public class RestUserController {
         return data;
     }
 
+    @RequestMapping(value = "logoutUserProcess", method = RequestMethod.GET)
     public HashMap<String, Object> logoutUserProcess(HttpServletRequest request) {
 
         HashMap<String, Object> data = new HashMap<String, Object>();

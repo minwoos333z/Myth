@@ -44,7 +44,7 @@
                 <c:otherwise>
                     <h3 class="secTitle"><i class="bi bi-file-lock2-fill"></i> 로그인</h3>
                     <div class="loginForm">
-
+                           ${sessionUser.user_nickname}님 환영합니다.
                         <div>
                             <div class="chk_box"></div>
                             <div class="login_etcBox">
