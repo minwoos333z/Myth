@@ -169,7 +169,7 @@ window.addEventListener("DOMContentLoaded", function () {
         }
 
         $("#insertForm").submit();
-        alert("회원가입이 완료 되었습니다. 이메일 인증을 해주세요");
+        alert("회원가입이 완료 되었습니다.");
     });
 
 });
