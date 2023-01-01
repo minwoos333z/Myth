@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.myth.board.mapper.BoardSQLMapper">
+
+    <!-- 게시글 전체 출력 쿼리 -->
+    <select id="getBoardList" resultType="com.spring.myth.vo.BoardVo">
+        SELECT * FROM myth_board
+    </select>
+
+    <!-- 카테고리 정보 출력 -->
+    <select id="getCategoryByNo" resultType="com.spring.myth.vo.CategoryVo">
+        SELECT * FROM myth_category WHERE category_no = #{category_no}
+    </select>
+
+    <!-- 카테고리별 게시글 출력 -->
+    <select id="getBoardCategoryList" resultType="com.spring.myth.vo.BoardVo">
+        SELECT * FROM myth_board WHERE category_no = #{category_no}
+    </select>
+
+    <!-- 카테고리 목록 출력 -->
+    <select id="getCategoryList" resultType="com.spring.myth.vo.CategoryVo">
+        SELECT * FROM myth_category
+    </select>
+
+</mapper>
