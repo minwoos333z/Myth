@@ -40,4 +40,8 @@
         SELECT count(*) FROM myth_user WHERE user_email = #{user_email}
     </select>
 
+    <!-- 로그인 쿼리 -->
+    <select id="selectByIdAndPw" resultType="com.spring.myth.vo.UserVo">
+        SELECT * FROM myth_user WHERE user_id = #{user_id} AND user_pw = #{user_pw}
+    </select>
 </mapper>

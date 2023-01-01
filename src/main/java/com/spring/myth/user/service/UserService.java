@@ -35,4 +35,9 @@ public class UserService {
     public boolean isSelectByEmail(String user_email) {
         return userSQLMapper.isSelectByEmail(user_email) > 0;
     }
+
+    /* 로그인 */
+    public UserVo selectByIdAndPw(UserVo param) {
+        return userSQLMapper.selectByIdAndPw(param);
+    }
 }

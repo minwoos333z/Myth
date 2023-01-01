@@ -19,4 +19,7 @@ public interface UserSQLMapper {
 
     /* 이메일 중복 체크 */
     public int isSelectByEmail(@Param("user_email") String user_email);
+
+    /* 로그인 쿼리 */
+    public UserVo selectByIdAndPw(UserVo param);
 }
