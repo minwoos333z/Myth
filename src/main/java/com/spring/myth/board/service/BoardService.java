@@ -67,4 +67,9 @@ public class BoardService {
         return dataList;
     }
 
+    /* 카테고리 목록 출력 */
+    public ArrayList<CategoryVo> getCateogryList() {
+        return boardSQLMapper.getCategoryList();
+    }
+
 }

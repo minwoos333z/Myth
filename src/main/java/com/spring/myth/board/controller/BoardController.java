@@ -1,6 +1,7 @@
 package com.spring.myth.board.controller;
 
 import com.spring.myth.board.service.BoardService;
+import com.spring.myth.vo.CategoryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,13 @@ public class BoardController {
             dataList = boardService.getBoardList();
         }
 
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        ArrayList<CategoryVo> list = boardService.getCateogryList();
+
+        data.put("list", list);
+
+        model.addAttribute("data", data);
         model.addAttribute("dataList", dataList);
 
         return "board/postMainPage";

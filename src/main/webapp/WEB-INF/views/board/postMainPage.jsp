@@ -66,6 +66,23 @@
         <div class="col">
             <!-- page Title -->
             <div class="row mt-1 conTitleArea">
+                <form action="../board/postMainPage" method="get">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <select class="form-select" name="category_no" id="boardCategory"
+                                    aria-label="Default select example">
+                                <c:forEach items="${data.list}" var="category">
+                                    <option value="${category.category_no}">
+                                            ${category.category_name}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col d-grid">
+                            <input type="submit" value="출력" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
             </div>
 
             <form name="readForm" role="form" method="post">
