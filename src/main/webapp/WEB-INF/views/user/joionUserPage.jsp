@@ -32,6 +32,7 @@
     <script type="text/javascript" src="../resources/js/commons/loginBox.js"></script>
     <script type="text/javascript" src="../resources/js/frame/dropdown.js"></script>
     <script type="text/javascript" src="../resources/js/frame/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../resources/js/user/joinUserPage.js"></script>
 
 </head>
 
@@ -113,7 +114,7 @@
                                                               style="height:36px;">중복확인</button></div>
                             <div class="col my-auto" id="alertEmail"><form:errors path="user_email" id="error_message" /></div>
                         </div>
-                        
+
                         <div class="row mt-1">
                             <div class="col"></div>
                             <div class="col-2 d-grid mb-3 "><button type="button" id="joinButton"
