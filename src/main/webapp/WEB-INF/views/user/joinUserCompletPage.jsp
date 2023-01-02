@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -30,47 +29,38 @@
     <script type="text/javascript" src="../resources/js/frame/dropdown.js"></script>
     <script type="text/javascript" src="../resources/js/frame/jquery-3.6.0.min.js"></script>
 
+    <title>barom</title>
 </head>
 
 <body>
 
+<jsp:include page="../commons/mainNav.jsp"></jsp:include>
 
-<div class="row" id="container">
-    <div class="col-1" style="width:5%;"></div>
-    <div class="col">
-        <jsp:include page="../commons/mainNav.jsp"></jsp:include>
-        <div class="row mt-3">
-            <div class="col-1" style="width:13%;">
-                <jsp:include page="../commons/loginBox.jsp"></jsp:include>
-                <div class="row">
-                    <div class="col"></div>
-                </div>
-            </div>
-            <div class="col ps-5" style="">
-                <!-- 각 페이지 내용 여기에 들어가면 됩니다  -->
-                <div class="row mt-2">
-                    <!-- subtitle -->
-                    <div class="col fs-2">
-                        회원 가입이 완료되었습니다 !
-                    </div>
-                </div>
-                <div class="row mt-3 divisionLine"></div>
-            </div>
-            <div class="col-2" style="width:13%;"></div>
+<!-- header part end-->
+
+<!-- body part start -->
+
+<section class="container-fluid">
+
+    <div class="row mt-4">
+
+        <jsp:include page="../commons/loginBox.jsp"></jsp:include>
+
+        <div class="col">
+            <!-- 페이지별 내용 시작-->
+
+            회원가입이 완료 되었습니다.
+
+            <!-- 페이지별 내용 끝 -->
         </div>
+
+        <jsp:include page="../commons/screenLeft.jsp"></jsp:include>
+
     </div>
-    <div class="col-1" style="width:5%;"></div>
-</div>
+</section>
 
+<jsp:include page="../commons/footer.jsp"></jsp:include>
 
-
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-</script>
 </body>
 
 </html>

@@ -138,11 +138,30 @@ window.addEventListener("DOMContentLoaded", function () {
                         "color": "black"
                     });
                     $("#alertEmail").text("✔  사용 가능한 이메일주소입니다.")
+                    alert("인증번호 발송이 완료되었습니다. 입력한 이메일에서 인증번호 확인을 해주세요.");
+                    $("#userCertified").attr("disabled", false);
+                    code = data.num;
                 }
             }
         });
     });
 
+    $("#confirmEmailButton").click(function () {
+        if ($("#userCertified").val().length != 6) {
+            $("#alertCertified").text("! 인증번호가 일치하지 않습니다. 다시 확인해주시기 바랍니다.")
+            $("#alertCertified").css({
+                "color": "red"
+            });
+            $("#userCertified").attr("autofocus", true);
+        } else if ($("#userCertified").val() == code) {
+            $("#alertCertified").text("✔ 메일인증이 완료되었습니다.")
+            $("#alertCertified").css({
+                "color": "green"
+            });
+            $("#alertCertified").attr("disabled", true);
+        } else {
+        }
+    });
 
     $("#joinButton").click(function () {
 
@@ -165,6 +184,11 @@ window.addEventListener("DOMContentLoaded", function () {
 
         if ($("#alertEmail").text() != "✔  사용 가능한 이메일주소입니다.") {
             alert("이메일 중복 확인을 해주세요");
+            return;
+        }
+
+        if($("#alertCertified").text() != "✔ 메일인증이 완료되었습니다.") {
+            alert("메일 인증을 해주세요");
             return;
         }
 

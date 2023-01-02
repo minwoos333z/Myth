@@ -116,6 +116,21 @@
                         </div>
 
                         <div class="row mt-1">
+                            <div class="col-7 bi bi-exclamation-square-fill deepblue">
+                                인증번호 발송은 서버 상황에 따라 5초에서 10초정도 시간이 걸릴 수 있습니다.
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-3 fs-5"><input class="form-control" id="userCertified" type="text"
+                                                           placeholder="인증번호를 입력해주세요." aria-label="default input example"
+                                                           disabled="disabled"></div>
+                            <div class="col-2 d-grid"><button type="button" id="confirmEmailButton"
+                                                              class="btnBasic" style="height:36px;">인증확인</button></div>
+                            <div class="col my-auto" id="alertCertified"></div>
+                        </div>
+
+                        <div class="row mt-1">
                             <div class="col"></div>
                             <div class="col-2 d-grid mb-3 "><button type="button" id="joinButton"
                                                                     class="btnBasic inputSubmit bi bi-check2-square">&nbsp;가입하기</button></div>
