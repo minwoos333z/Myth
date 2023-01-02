@@ -53,14 +53,8 @@
 
             <!-- 페이지별 내용 끝 -->
         </div>
-
-        <jsp:include page="../commons/screenLeft.jsp"></jsp:include>
-
     </div>
 </section>
-
-<jsp:include page="../commons/footer.jsp"></jsp:include>
-
 </body>
 
 </html>

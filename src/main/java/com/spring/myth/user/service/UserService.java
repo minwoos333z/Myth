@@ -1,5 +1,6 @@
 package com.spring.myth.user.service;
 
+import com.spring.myth.commons.MessageDigestUtil;
 import com.spring.myth.user.mapper.UserSQLMapper;
 import com.spring.myth.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,12 @@ public class UserService {
 
     /* 회원 가입 */
     public void insertUser(UserVo param) {
+
+        // 비밀번호 해싱...
+        String password = param.getUser_pw();
+        password = MessageDigestUtil.getPasswordHashCode(password);
+        param.setUser_pw(password);
+
         userSQLMapper.insertUser(param);
     }
 
@@ -38,6 +45,12 @@ public class UserService {
 
     /* 로그인 */
     public UserVo selectByIdAndPw(UserVo param) {
+
+        // 비밀번호 해싱...
+        String password = param.getUser_pw();
+        password = MessageDigestUtil.getPasswordHashCode(password);
+        param.setUser_pw(password);
+
         return userSQLMapper.selectByIdAndPw(param);
     }
 }
