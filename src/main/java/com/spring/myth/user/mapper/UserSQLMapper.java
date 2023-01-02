@@ -1,7 +1,10 @@
 package com.spring.myth.user.mapper;
 
+import com.spring.myth.vo.QuestionVo;
 import com.spring.myth.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.ArrayList;
 
 public interface UserSQLMapper {
 
@@ -25,4 +28,7 @@ public interface UserSQLMapper {
 
     /* 유저 정보 */
     public UserVo getUserByNo(int user_no);
+
+    /* 비밀번호 힌트 */
+    public ArrayList<QuestionVo> getJoinQuestionList();
 }

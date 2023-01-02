@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -128,6 +129,24 @@
                             <div class="col-2 d-grid"><button type="button" id="confirmEmailButton"
                                                               class="btnBasic" style="height:36px;">인증확인</button></div>
                             <div class="col my-auto" id="alertCertified"></div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col fs-5">
+                                <select class="form-select" name="question_no" id="userQuestion" aria-label="Default select example">
+                                    <c:forEach items="${data.list }" var="question">
+                                        <option value="${question.question_no }">
+                                                ${question.question_content }</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col fs-5"><form:input class="form-control" id="userFindAnswer" path="user_findAnswer"
+                                                              type="text" placeholder="비밀번호 찾기 정답을 입력해주세요" aria-label="default input example" />
+                            </div>
+                            <div class="col my-auto"><form:errors path="user_findAnswer" id="error_message" /></div>
                         </div>
 
                         <div class="row mt-1">

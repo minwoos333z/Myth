@@ -2,9 +2,12 @@ package com.spring.myth.user.service;
 
 import com.spring.myth.commons.MessageDigestUtil;
 import com.spring.myth.user.mapper.UserSQLMapper;
+import com.spring.myth.vo.QuestionVo;
 import com.spring.myth.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class UserService {
@@ -52,5 +55,10 @@ public class UserService {
         param.setUser_pw(password);
 
         return userSQLMapper.selectByIdAndPw(param);
+    }
+
+    /* 비밀번호 찾기 힌트 */
+    public ArrayList<QuestionVo> getJoinQuestionList() {
+        return userSQLMapper.getJoinQuestionList();
     }
 }

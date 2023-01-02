@@ -11,6 +11,7 @@ import java.util.Date;
 public class UserVo {
 
     private int user_no;
+    private int question_no;
 
     @NotNull(message = "아이디의 필드값이 빈칸이 될 수 없습니다.")
     @Pattern(regexp = "^(?=.*[a-zA-z])(?=.*[0-9])(?!.*[^a-zA-z0-9]).{5,10}", message = "아이디는 영문자 숫자 각 한글자씩 모두 포함하여 5~10글자 사이로 입력 하여야합니다.")
@@ -45,12 +46,17 @@ public class UserVo {
     private Date user_join_date;
     private String user_status;
 
+    @NotNull(message = "질문답변의 필드값이 빈칸이 될 수 없습니다.")
+    @Length(min = 1, max = 100, message = "최소 한글자에서 최대 백글자 까지 입력 가능합니다.")
+    private String user_findAnswer;
+
     public UserVo() {
         super();
     }
 
-    public UserVo(int user_no, String user_id, String user_pw, String user_nickname, String user_gender, String user_phone, String user_email, Date user_birth, Date user_join_date, String user_status) {
+    public UserVo(int user_no, int question_no, String user_id, String user_pw, String user_nickname, String user_gender, String user_phone, String user_email, Date user_birth, Date user_join_date, String user_status, String user_findAnswer) {
         this.user_no = user_no;
+        this.question_no = question_no;
         this.user_id = user_id;
         this.user_pw = user_pw;
         this.user_nickname = user_nickname;
@@ -60,6 +66,7 @@ public class UserVo {
         this.user_birth = user_birth;
         this.user_join_date = user_join_date;
         this.user_status = user_status;
+        this.user_findAnswer = user_findAnswer;
     }
 
     public int getUser_no() {
@@ -68,6 +75,14 @@ public class UserVo {
 
     public void setUser_no(int user_no) {
         this.user_no = user_no;
+    }
+
+    public int getQuestion_no() {
+        return question_no;
+    }
+
+    public void setQuestion_no(int question_no) {
+        this.question_no = question_no;
     }
 
     public String getUser_id() {
@@ -142,19 +157,11 @@ public class UserVo {
         this.user_status = user_status;
     }
 
-    @Override
-    public String toString() {
-        return "UserVo{" +
-                "user_no=" + user_no +
-                ", user_id='" + user_id + '\'' +
-                ", user_pw='" + user_pw + '\'' +
-                ", user_nickname='" + user_nickname + '\'' +
-                ", user_gender='" + user_gender + '\'' +
-                ", user_phone='" + user_phone + '\'' +
-                ", user_email='" + user_email + '\'' +
-                ", user_birth=" + user_birth +
-                ", user_join_date=" + user_join_date +
-                ", user_status='" + user_status + '\'' +
-                '}';
+    public String getUser_findAnswer() {
+        return user_findAnswer;
+    }
+
+    public void setUser_findAnswer(String user_findAnswer) {
+        this.user_findAnswer = user_findAnswer;
     }
 }

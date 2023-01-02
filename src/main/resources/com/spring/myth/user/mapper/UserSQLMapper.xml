@@ -8,6 +8,7 @@
     <insert id="insertUser">
         INSERT INTO myth_user VALUES(
             myth_user_seq.nextval,
+            #{question_no},
             #{user_id},
             #{user_pw},
             #{user_nickname},
@@ -16,7 +17,8 @@
             #{user_email},
             #{user_birth},
             SYSDATE,
-            'active'
+            'active',
+            #{user_findAnswer}
         )
     </insert>
 
@@ -49,4 +51,10 @@
     <select id="getUserByNo" resultType="com.spring.myth.vo.UserVo">
         SELECT * FROM myth_user WHERE user_no = #{user_no}
     </select>
+
+    <!-- 비밀번호 찾기 힌트 쿼리 -->
+    <select id="getJoinQuestionList" resultType="com.spring.myth.vo.QuestionVo">
+        SELECT * FROM myth_question
+    </select>
+
 </mapper>
