@@ -104,8 +104,8 @@ public class RestUserController {
         return data;
     }
 
-    @RequestMapping(value = "logoutUserProcess", method = RequestMethod.GET)
-    public HashMap<String, Object> logoutUserProcess(HttpServletRequest request) {
+    @RequestMapping(value = "logoutUserPorcess", method = RequestMethod.POST)
+    public HashMap<String, Object> logoutUserPorcess(HttpServletRequest request) {
 
         HashMap<String, Object> data = new HashMap<String, Object>();
 
