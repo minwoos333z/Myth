@@ -92,4 +92,14 @@ public class BoardService {
 
         return map;
     }
+
+    /* 게시글 수정 */
+    public void updatePostContentPProcess(BoardVo param) {
+        boardSQLMapper.updatePostContentPProcess(param);
+    }
+
+    /* 게시글 삭제 */
+    public void deletePostContentProcess(int board_no) {
+        boardSQLMapper.deletePostContentProcess(board_no);
+    }
 }

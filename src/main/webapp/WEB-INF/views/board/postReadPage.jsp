@@ -41,6 +41,29 @@
     <script type="text/javascript" src="../resources/js/frame/dropdown.js"></script>
     <script type="text/javascript" src="../resources/js/frame/jquery-3.6.0.min.js"></script>
 
+    <script type="text/javascript">
+
+        function goUpdatePage(boardNo) {
+            var formObj = $("form[name='updateForm']");
+            $("#BOARD_NO").attr("value", boardNo);
+            formObj.attr("method", "post");
+            formObj.attr("action", "/board/updatePostContentPage");
+            formObj.submit();
+        }
+
+        function postDeleteContentPage(boardNo) {
+            if (confirm("정말로 게시글을 삭제 하시겠습니까?")) {
+                var formObj = $("form[name='deleteForm']");
+                $("#BoardNo").attr("value", boardNo);
+                formObj.attr("method", "post");
+                formObj.attr("action", "/board/deletePostContentProcess");
+                formObj.submit();
+                alert(boardNo);
+            }
+        }
+
+    </script>
+
 </head>
 
 <body>
@@ -113,10 +136,18 @@
                     <a href="javascript:writeCommentPage(${data.boardVo.board_no })" type="button" class="btn btn-outline-primary">댓글작성</a>
                 </c:if>
                 <c:if test="${sessionUser.user_no == data.boardVo.user_no}">
-                    <a href="javascript:postDeleteContentPage(${data.boardVo.board_no })" class="btn btn-outline-primary" type="button">글삭제</a>
+                    <a href="javascript:postDeleteContentPage(${data.boardVo.board_no });" class="btn btn-outline-primary" type="button">글삭제</a>
                     <a href="javascript:goUpdatePage(${data.boardVo.board_no });" class="btn btn-outline-primary" type="button">글수정</a>
                 </c:if>
             </div>
+
+            <form name="updateForm" role="form" method="post">
+                <input type="hidden" id="BOARD_NO" name="board_no" value="">
+            </form>
+
+            <form name="deleteForm" role="form" method="post">
+                <input type="hidden" id="BoardNo" name="board_no" value="">
+            </form>
 
             <!-- 페이지별 내용 끝 -->
         </div>

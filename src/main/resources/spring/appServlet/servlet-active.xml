@@ -34,6 +34,7 @@
         <interceptor>
             <mapping path="/board/*"/>
             <exclude-mapping path="/board/postMainPage"/>
+            <exclude-mapping path="/board/postReadPage"/>
             <beans:bean id="authenticationInterceptor" class="com.spring.myth.interceptor.AuthenticationInterceptor"></beans:bean>
         </interceptor>
     </interceptors>

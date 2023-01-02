@@ -95,4 +95,45 @@ public class BoardController {
 
     }
 
+    @RequestMapping(value = "updatePostContentPage", method = RequestMethod.POST)
+    public String updatePostContentPage(@RequestParam(value = "board_no", defaultValue = "0") int board_no ,@ModelAttribute("boardVo") BoardVo param, Model model) {
+
+        HashMap<String, Object> date = new HashMap<String, Object>();
+
+        ArrayList<CategoryVo> list = boardService.getCateogryList();
+
+        HashMap<String, Object> dataList = boardService.getBoard(board_no);
+
+        date.put("list", list);
+        model.addAttribute("date", date);
+        model.addAttribute("data", dataList);
+
+        return "board/updatePostContentPage";
+    }
+
+    @RequestMapping(value = "updatePostContentProcess")
+    public String updatePostContentProcess(@Valid BoardVo param, BindingResult result, Model model) {
+
+        if (result.hasErrors()) {
+            HashMap<String, Object> date = new HashMap<String, Object>();
+
+            ArrayList<CategoryVo> list = boardService.getCateogryList();
+            date.put("list", list);
+            model.addAttribute("date", date);
+            return "board/updatePostContentPage";
+        }
+
+        boardService.updatePostContentPProcess(param);
+        return "redirect:./postMainPage?board_no=" + param.getBoard_no();
+    }
+
+    @RequestMapping(value = "deletePostContentProcess", method = RequestMethod.POST)
+    public String deletePostContentProcess(@RequestParam(value = "board_no", defaultValue = "0") int board_no) {
+
+        boardService.deletePostContentProcess(board_no);
+
+        System.out.println(board_no + "입니다");
+
+        return "redirect:./postMainPage";
+    }
 }

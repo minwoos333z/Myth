@@ -24,4 +24,10 @@ public interface BoardSQLMapper {
 
     /* 게시글 상세 보기 */
     public BoardVo getBoardByNo(@Param("board_no") int board_no);
+
+    /* 게시글 수정 */
+    public void updatePostContentPProcess(BoardVo param);
+
+    /* 게시글 삭제 */
+    public void deletePostContentProcess(@Param("board_no") int board_no);
 }

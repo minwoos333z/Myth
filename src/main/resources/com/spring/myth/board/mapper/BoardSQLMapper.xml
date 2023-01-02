@@ -42,4 +42,13 @@
         SELECT * FROM myth_board WHERE board_no = #{board_no}
     </select>
 
+    <!-- 게시글 업데이트 -->
+    <update id="updatePostContentPProcess">
+        UPDATE myth_board SET category_no = #{category_no} board_title = #{board_title}, board_content = #{board_content} WHERE board_no = #{board_no}
+    </update>
+
+    <!-- 게시글 삭제 -->
+    <delete id="deletePostContentProcess">
+        DELETE FROM myth_board WHERE board_no = #{board_no}
+    </delete>
 </mapper>

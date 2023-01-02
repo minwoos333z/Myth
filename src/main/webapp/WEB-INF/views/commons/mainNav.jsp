@@ -23,7 +23,7 @@
                     <li>
                         <ul>
                             <li><a href="..">공지사항</a></li>
-                            <li><a href="../board/freeBoardPage">자유게시판</a></li>
+                            <li><a href="../board/postMainPage">자유게시판</a></li>
                             <li><a href="..">QnA게시판</a></li>
                         </ul>
                     </li>

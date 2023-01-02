@@ -49,7 +49,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
         $.ajax({
             type: "post",
-            url: "../user/userLoginProcess",
+            url: "../user/logoutUserProcess",
             data: {
 
             },
