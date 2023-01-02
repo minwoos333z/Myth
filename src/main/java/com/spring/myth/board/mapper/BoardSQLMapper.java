@@ -19,4 +19,6 @@ public interface BoardSQLMapper {
     /* 카테고리 목록 불러오기 */
     public ArrayList<CategoryVo> getCategoryList();
 
+    /* 게시글 작성 */
+    public void insertBoard(BoardVo param);
 }

@@ -24,4 +24,17 @@
         SELECT * FROM myth_category
     </select>
 
+    <!-- 게시글 작성 -->
+    <insert id="insertBoard">
+        INSERT INTO myth_board VALUES(
+                                      myth_board_seq.nextval,
+                                      #{user_no},
+                                      #{category_no},
+                                      #{board_title},
+                                      #{board_content},
+                                      0,
+                                      SYSDATE
+                                     )
+    </insert>
+
 </mapper>

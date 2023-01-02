@@ -12,4 +12,9 @@ public class MainRootController {
 
         return "main/main";
     }
+
+    @RequestMapping(value = "main/main", method = RequestMethod.GET)
+    public String mainPage() {
+        return "main/main";
+    }
 }

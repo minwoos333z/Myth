@@ -72,4 +72,8 @@ public class BoardService {
         return boardSQLMapper.getCategoryList();
     }
 
+    /* 게시글 작성 */
+    public void insertBoard(BoardVo param) {
+        boardSQLMapper.insertBoard(param);
+    }
 }
