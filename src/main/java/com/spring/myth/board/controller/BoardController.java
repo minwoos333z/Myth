@@ -84,4 +84,15 @@ public class BoardController {
         return "redirect:./postMainPage";
     }
 
+    @RequestMapping(value ="postReadPage", method = RequestMethod.POST)
+    public String postReadPage(@RequestParam(value = "board_no", defaultValue = "0") int board_no, Model model) {
+
+        HashMap<String, Object> data = boardService.getBoard(board_no);
+
+        model.addAttribute("data", data);
+
+        return "board/postReadPage";
+
+    }
+
 }

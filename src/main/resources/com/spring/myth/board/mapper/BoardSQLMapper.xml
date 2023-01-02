@@ -37,4 +37,9 @@
                                      )
     </insert>
 
+    <!-- 게시글 상세 보기 -->
+    <select id="getBoardByNo" resultType="com.spring.myth.vo.BoardVo">
+        SELECT * FROM myth_board WHERE board_no = #{board_no}
+    </select>
+
 </mapper>

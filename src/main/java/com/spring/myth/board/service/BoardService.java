@@ -76,4 +76,20 @@ public class BoardService {
     public void insertBoard(BoardVo param) {
         boardSQLMapper.insertBoard(param);
     }
+
+    /* 게시글 상세보기 */
+    public HashMap<String, Object> getBoard(int board_no) {
+
+        HashMap<String, Object> map = new HashMap<String, Object>();
+
+        BoardVo boardVo = boardSQLMapper.getBoardByNo(board_no);
+        UserVo userVo = userSQLMapper.getUserByNo(boardVo.getUser_no());
+        CategoryVo categoryVo = boardSQLMapper.getCategoryByNo(boardVo.getCategory_no());
+
+        map.put("userVo", userVo);
+        map.put("categoryVo", categoryVo);
+        map.put("boardVo", boardVo);
+
+        return map;
+    }
 }

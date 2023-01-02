@@ -21,4 +21,7 @@ public interface BoardSQLMapper {
 
     /* 게시글 작성 */
     public void insertBoard(BoardVo param);
+
+    /* 게시글 상세 보기 */
+    public BoardVo getBoardByNo(@Param("board_no") int board_no);
 }
