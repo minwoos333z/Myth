@@ -3,6 +3,7 @@ package com.spring.myth.board.controller;
 import com.spring.myth.board.service.BoardService;
 import com.spring.myth.vo.BoardVo;
 import com.spring.myth.vo.CategoryVo;
+import com.spring.myth.vo.ReadPageVo;
 import com.spring.myth.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 @Controller
@@ -85,7 +88,43 @@ public class BoardController {
     }
 
     @RequestMapping(value ="postReadPage", method = RequestMethod.POST)
-    public String postReadPage(@RequestParam(value = "board_no", defaultValue = "0") int board_no, Model model) {
+    public String postReadPage(@RequestParam(value = "board_no", defaultValue = "0") int board_no, Model model, HttpServletRequest request) {
+
+        ArrayList<ReadPageVo> readPageVo = boardService.getReadPageList(board_no);
+
+        if (boardService.isSelectReadBoardNo(board_no)) {
+            if (!boardService.isSelectReadClientIp(request.getRemoteAddr())) {
+                ReadPageVo param = new ReadPageVo();
+                param.setBoard_no(board_no);
+                param.setClient_ip(request.getRemoteAddr());
+
+                boardService.insertReadPage(param);
+                boardService.increaseReadCount(board_no);
+            }
+        } else {
+            ReadPageVo param = new ReadPageVo();
+            param.setBoard_no(board_no);
+            param.setClient_ip(request.getRemoteAddr());
+
+            boardService.insertReadPage(param);
+            boardService.increaseReadCount(board_no);
+        }
+
+        for (ReadPageVo param : readPageVo) {
+            if (param != null) {
+                if (boardService.isSelectReadClientIp(request.getRemoteAddr())) {
+                    if (param.getClient_ip().equals(request.getRemoteAddr())) {
+                        Date writeDate = new Date(System.currentTimeMillis());
+                        Date tagetDate = new Date(param.getRead_write_date().getTime() + 1000 * 60 * 60 * 24);
+
+                        if (writeDate.after(tagetDate)) {
+                            boardService.increaseReadCount(board_no);
+                            boardService.updateReadPage(param);
+                        }
+                    }
+                }
+            }
+        }
 
         HashMap<String, Object> data = boardService.getBoard(board_no);
 

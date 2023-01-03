@@ -51,4 +51,41 @@
     <delete id="deletePostContentProcess">
         DELETE FROM myth_board WHERE board_no = #{board_no}
     </delete>
+
+    <insert id="insertReadPage">
+        INSERT INTO myth_read_page VALUES (
+                                                myth_read_page_seq.nextval,
+                                                #{board_no},
+                                                #{client_ip},
+                                                SYSDATE
+                                            )
+    </insert>
+
+    <select id="getReadPageList" resultType="com.spring.myth.vo.ReadPageVo">
+        SELECT * FROM myth_read_page WHERE board_no = #{board_no}
+    </select>
+
+    <select id="selectByClientIp" resultType="int">
+        SELECT count(*) FROM myth_read_page WHERE client_ip = #{client_ip}
+    </select>
+
+    <select id="selectByReadByBoardNo" resultType="int">
+        SELECT count(*) FROM myth_read_page WHERE board_no = #{board_no}
+    </select>
+
+    <select id="selectByReadPage" resultType="int">
+        SELECT count(*) FROM myth_read_page WHERE client_ip = #{client_ip} AND board_no = #{board_no}
+    </select>
+
+    <update id="increaseReadCount">
+        UPDATE myth_board SET board_readcount = board_readcount + 1 WHERE board_no = #{board_no}
+    </update>
+
+    <update id="updateReadPage">
+        UPDATE myth_read_page SET read_write_date = SYSDATE WHERE client_ip = #{client_ip} AND board_no = #{board_no}
+    </update>
+
+    <delete id="deleteReadPage">
+        DELETE FROM myth_read_page WHERE board_no = #{board_no}
+    </delete>
 </mapper>

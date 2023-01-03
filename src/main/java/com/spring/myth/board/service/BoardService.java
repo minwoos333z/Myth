@@ -4,6 +4,7 @@ import com.spring.myth.board.mapper.BoardSQLMapper;
 import com.spring.myth.user.mapper.UserSQLMapper;
 import com.spring.myth.vo.BoardVo;
 import com.spring.myth.vo.CategoryVo;
+import com.spring.myth.vo.ReadPageVo;
 import com.spring.myth.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,5 +102,40 @@ public class BoardService {
     /* 게시글 삭제 */
     public void deletePostContentProcess(int board_no) {
         boardSQLMapper.deletePostContentProcess(board_no);
+    }
+
+    /* 조회수 증가 중복 방지 */
+    public void insertReadPage(ReadPageVo param) {
+        boardSQLMapper.insertReadPage(param);
+    }
+
+    /* 조회수 증가 중복 방지 조회 */
+    public ArrayList<ReadPageVo> getReadPageList(int board_no) {
+        return boardSQLMapper.getReadPageList(board_no);
+    }
+
+    /* 클라이언트 아이피 조회 쿼리 */
+    public boolean isSelectReadClientIp(String client_ip) {
+        return boardSQLMapper.selectByClientIp(client_ip) > 0;
+    }
+
+    /* 조회수 중복 증가 게시글 조회 */
+    public boolean isSelectReadBoardNo(int board_no) {
+        return boardSQLMapper.selectByReadByBoardNo(board_no) > 0;
+    }
+
+    /* 조회수 중복 증가 방지 조회 (게시글번호, 아이피로 조회) */
+    public boolean selectByReadPage(ReadPageVo param) {
+        return boardSQLMapper.selectByReadPage(param) > 0;
+    }
+
+    /* 조회수 증가 */
+    public void increaseReadCount(int board_no) {
+        boardSQLMapper.increaseReadCount(board_no);
+    }
+
+    /* 조회수 증가 */
+    public void updateReadPage(ReadPageVo param) {
+        boardSQLMapper.updateReadPage(param);
     }
 }
