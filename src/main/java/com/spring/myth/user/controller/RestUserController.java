@@ -3,6 +3,7 @@ package com.spring.myth.user.controller;
 import com.spring.myth.commons.MailSenderThread;
 import com.spring.myth.commons.MessageDigestUtil;
 import com.spring.myth.user.service.UserService;
+import com.spring.myth.vo.QuestionVo;
 import com.spring.myth.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -209,6 +211,104 @@ public class RestUserController {
             MailSenderThread mst = new MailSenderThread(javaMailSender, toMail, content, title, setFrom);
             mst.start();
         }
+
+        return data;
+    }
+
+    @RequestMapping(value = "checkSession", method = RequestMethod.GET)
+    public HashMap<String, Object> checkSession(HttpSession session) {
+
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
+
+        if (sessionUser == null) {
+            data.put("result", "fail");
+        } else {
+            data.put("result", "success");
+            data.put("sessionUser", sessionUser);
+        }
+
+        return data;
+    }
+
+    @RequestMapping(value = "getUserInfoByUserNo", method = RequestMethod.GET)
+    public HashMap<String, Object> getUserInfoByUserNo(int userNo) {
+
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        HashMap<String, Object> userData = userService.getUserInfoByUserNo(userNo);
+
+        data.put("userData", userData);
+
+        return data;
+    }
+
+    @RequestMapping(value = "deleteUserInfoByUserNo", method = RequestMethod.POST)
+    public HashMap<String, Object> deleteUserInfoByUserNo(UserVo vo, HttpSession session) {
+
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
+        String password = vo.getUser_pw();
+        password = MessageDigestUtil.getPasswordHashCode(password);
+        vo.setUser_pw(password);
+
+        if (sessionUser.getUser_pw().equals(vo.getUser_pw())) {
+
+            userService.deleteUserInfoByUserNo(sessionUser);
+            session.invalidate();
+            data.put("result", "success");
+        } else {
+            data.put("result", "fail");
+        }
+        return data;
+    }
+    @RequestMapping(value = "getQuestionList", method = RequestMethod.GET)
+    public HashMap<String, Object> getQuestionList() {
+
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        ArrayList<QuestionVo> questionList = userService.getJoinQuestionList();
+
+        data.put("questionList", questionList);
+
+        return data;
+    }
+
+    @RequestMapping(value = "mailCheck", method = RequestMethod.GET)
+    public HashMap<String, Object> mailCheck(String userEmail) {
+
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        Random random = new Random();
+        int checkNum = random.nextInt(888888) + 111111;
+
+        String setFrom = "관리자";
+        String toMail = userEmail;
+        String title = "인증 이메일 입니다.";
+        String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
+                + "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+        String num = "";
+
+        num = Integer.toString(checkNum);
+
+        MailSenderThread mst = new MailSenderThread(javaMailSender, toMail, content, title, setFrom);
+        mst.start();
+
+        return data;
+    }
+
+    @RequestMapping(value = "updateUserInfoByUserNo", method = RequestMethod.POST)
+    public HashMap<String, Object> updateUserInfoByUserNo(UserVo vo, HttpSession session) {
+
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
+
+        vo.setUser_no(sessionUser.getUser_no());
+
+        userService.updateUserInfoByUserNo(vo);
 
         return data;
     }

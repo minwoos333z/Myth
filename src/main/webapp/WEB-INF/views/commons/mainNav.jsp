@@ -29,8 +29,7 @@
                     </li>
                     <li>
                         <ul>
-                            <li><a href="..">개인정보수정</a></li>
-                            <li><a href="..">회원탈퇴</a></li>
+                            <li><a href="../user/userInfoPage">개인정보수정</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -77,4 +77,27 @@
         UPDATE myth_user SET user_pw = #{user_pw} WHERE user_findAnswer = #{user_findAnswer} AND user_id = #{user_id}
     </update>
 
+    <!-- 유저 정보 -->
+    <select id="getUserInfoByUserNo" resultType="map">
+        SELECT * FROM myth_user WHERE user_no = #{user_no}
+    </select>
+
+    <!-- 회원 탈퇴 -->
+    <update id="deleteUserInfoByUserNo">
+        UPDATE myth_user SET
+            user_status = 'Inactive'
+        WHERE user_no = #{user_no}
+          AND user_pw = #{user_pw}
+    </update>
+
+    <!-- 개인정보 수정 -->
+    <update id="updateUserInfoByUserNo">
+        UPDATE myth_user SET
+                               question_no = #{question_no},
+                               user_pw = #{user_pw},
+                               user_nickname = #{user_nickname},
+                               user_phone = #{user_phone},
+                               user_email = #{user_email},
+                               user_findAnswer = #{user_findAnswer} WHERE user_no = #{user_no}
+    </update>
 </mapper>

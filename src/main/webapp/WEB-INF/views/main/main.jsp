@@ -57,19 +57,19 @@
                 <h3 class="secTitle"><i class="bi bi-arrow-right-square-fill"></i> 주로 찾는 기능</h3>
             </div>
             <div class="row middleBtnSection px-4 pb-2 border-bottom">
-                <a href="">
+                <a href="../board/postWriteContentPage">
                     <div class="row iconSpace">
                         <img src="../resources/img/icon/agreement.png" alt="">
                         <h3>글 작성</h3>
                     </div>
                 </a>
-                <a href="..">
+                <a href="../user/userInfoPage">
                     <div class="row iconSpace">
                         <img src="../resources/img/icon/search.png" alt="">
                         <h3>정보 수정</h3>
                     </div>
                 </a>
-                <a href="..">
+                <a href="../board/postMainPage">
                     <div class="row iconSpace">
                         <img src="../resources/img/icon/computer.png" alt="">
                         <h3>자유게시판</h3>

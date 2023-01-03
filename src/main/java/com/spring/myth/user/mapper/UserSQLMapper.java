@@ -44,4 +44,13 @@ public interface UserSQLMapper {
 
     /* 임시 비밀번호 변경 */
     public void getUserUpdatePw(UserVo param);
+
+    /* 유저 정보 */
+    public HashMap<String, Object> getUserInfoByUserNo(@Param("user_no") int user_no);
+
+    /* 회원탈퇴 */
+    public void deleteUserInfoByUserNo(UserVo param);
+
+    /* 정보 수정 */
+    public void updateUserInfoByUserNo(UserVo param);
 }

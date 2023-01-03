@@ -81,4 +81,24 @@ public class UserService {
     public void getUserUpdatePw(UserVo param) {
         userSQLMapper.getUserUpdatePw(param);
     }
+
+    /* 유저정보 */
+    public HashMap<String, Object> getUserInfoByUserNo(int userNo) {
+        HashMap<String, Object> userInfo = userSQLMapper.getUserInfoByUserNo(userNo);
+
+        return userInfo;
+    }
+
+    /* 회원탈퇴 */
+    public void deleteUserInfoByUserNo(UserVo param) {
+        userSQLMapper.deleteUserInfoByUserNo(param);
+    }
+
+    /* 개인정보 수정 */
+    public void updateUserInfoByUserNo(UserVo vo) {
+        String password = vo.getUser_pw();
+        password = MessageDigestUtil.getPasswordHashCode(password);
+        vo.setUser_pw(password);
+        userSQLMapper.updateUserInfoByUserNo(vo);
+    }
 }
