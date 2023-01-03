@@ -1,6 +1,8 @@
 package com.spring.myth.board.mapper;
 
 import java.util.ArrayList;
+
+import com.spring.myth.vo.BoardLikeVo;
 import com.spring.myth.vo.BoardVo;
 import com.spring.myth.vo.CategoryVo;
 import com.spring.myth.vo.ReadPageVo;
@@ -54,4 +56,17 @@ public interface BoardSQLMapper {
 
     /* 조회수 증가 중복 삭제 */
     public void deleteReadPage(int board_no);
+
+    /* 게시글 좋아요 */
+    public void insertLike(BoardLikeVo param);
+
+    /* 게시글 좋아요 취소 */
+    public void deleteLike(BoardLikeVo param);
+
+    /* 게시글 좋아요 조회 */
+    public int getMyLikeCount(BoardLikeVo param);
+
+    /* 게시글 좋아요 갯수 */
+    public int getTotalLikeCount(@Param("board_no") int board_no);
+
 }

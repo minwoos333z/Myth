@@ -2,10 +2,7 @@ package com.spring.myth.board.service;
 
 import com.spring.myth.board.mapper.BoardSQLMapper;
 import com.spring.myth.user.mapper.UserSQLMapper;
-import com.spring.myth.vo.BoardVo;
-import com.spring.myth.vo.CategoryVo;
-import com.spring.myth.vo.ReadPageVo;
-import com.spring.myth.vo.UserVo;
+import com.spring.myth.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -137,5 +134,27 @@ public class BoardService {
     /* 조회수 증가 */
     public void updateReadPage(ReadPageVo param) {
         boardSQLMapper.updateReadPage(param);
+    }
+
+    /* 게시글 좋아요 */
+    public void doLike(BoardLikeVo param) {
+
+        int count = boardSQLMapper.getMyLikeCount(param);
+
+        if(count > 0) {
+            boardSQLMapper.deleteLike(param);
+        }else {
+            boardSQLMapper.insertLike(param);
+        }
+    }
+
+    /* 게시글 좋아요 상태 */
+    public int getMyLikeCount(BoardLikeVo param) {
+        return boardSQLMapper.getMyLikeCount(param);
+    }
+
+    /* 게시글 좋아요 갯수 */
+    public int getTotalLikeCount(int board_no) {
+        return boardSQLMapper.getTotalLikeCount(board_no);
     }
 }

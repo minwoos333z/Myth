@@ -1,10 +1,7 @@
 package com.spring.myth.board.controller;
 
 import com.spring.myth.board.service.BoardService;
-import com.spring.myth.vo.BoardVo;
-import com.spring.myth.vo.CategoryVo;
-import com.spring.myth.vo.ReadPageVo;
-import com.spring.myth.vo.UserVo;
+import com.spring.myth.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -129,6 +126,21 @@ public class BoardController {
         HashMap<String, Object> data = boardService.getBoard(board_no);
 
         model.addAttribute("data", data);
+
+        int totalLikeCount = boardService.getTotalLikeCount(board_no);
+        model.addAttribute("totalLikeCount",totalLikeCount);
+
+        UserVo sessionUser = (UserVo) request.getSession().getAttribute("sessionUser");
+        if(sessionUser != null) {
+            //로그인을 했을때...
+            int memberNo = sessionUser.getUser_no();
+            BoardLikeVo boardLikeVo = new BoardLikeVo();
+            boardLikeVo.setUser_no(memberNo);
+            boardLikeVo.setBoard_no(board_no);
+
+            int myLikeCount = boardService.getMyLikeCount(boardLikeVo);
+            model.addAttribute("myLikeCount",myLikeCount);
+        }
 
         return "board/postReadPage";
 

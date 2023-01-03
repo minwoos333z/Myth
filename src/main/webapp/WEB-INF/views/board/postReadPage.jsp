@@ -40,6 +40,7 @@
     <script type="text/javascript" src="../resources/js/commons/loginBox.js"></script>
     <script type="text/javascript" src="../resources/js/frame/dropdown.js"></script>
     <script type="text/javascript" src="../resources/js/frame/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../resources/js/board/postReadPage.js"></script>
 
     <script type="text/javascript">
 
@@ -111,6 +112,13 @@
                 </tr>
 
                 <tr>
+                    <th scope="row" width=100px align="center" style="border-right:1.5px solid steelblue">좋아요수</th>
+                    <td width=100px align="center">
+                        ${totalLikeCount}
+                    </td>
+                </tr>
+
+                <tr>
                     <th scope="row" width=100px align="center" style="border-right:1.5px solid steelblue">작성일시</th>
                     <td width=100px align="center">
                         <fmt:formatDate value="${data.boardVo.board_write_date }" pattern="yyyy년MM월dd일 HH시 mm분 ss초" />
@@ -134,6 +142,7 @@
                 <a href="./postMainPage" class="btn btn-outline-primary" type="button">목록으로</a>
                 <c:if test="${!empty sessionUser }">
                     <a href="javascript:writeCommentPage(${data.boardVo.board_no })" type="button" class="btn btn-outline-primary">댓글작성</a>
+                    <button type="button" class="btn btn-outline-primary" id="doLike">좋아요</button>
                 </c:if>
                 <c:if test="${sessionUser.user_no == data.boardVo.user_no}">
                     <a href="javascript:postDeleteContentPage(${data.boardVo.board_no });" class="btn btn-outline-primary" type="button">글삭제</a>
@@ -148,6 +157,8 @@
             <form name="deleteForm" role="form" method="post">
                 <input type="hidden" id="BoardNo" name="board_no" value="">
             </form>
+
+            <input type="hidden" id="like_board_no" value="${data.boardVo.board_no}">
 
             <!-- 페이지별 내용 끝 -->
         </div>
