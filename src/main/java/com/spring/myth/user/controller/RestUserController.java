@@ -1,6 +1,7 @@
 package com.spring.myth.user.controller;
 
 import com.spring.myth.commons.MailSenderThread;
+import com.spring.myth.commons.MessageDigestUtil;
 import com.spring.myth.user.service.UserService;
 import com.spring.myth.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +136,79 @@ public class RestUserController {
 
         request.getSession().invalidate();
         request.getSession(true);
+
+        return data;
+    }
+
+    @RequestMapping(value = "getUserIdByNameAndEmail", method = RequestMethod.GET)
+    public HashMap<String, Object> getUserIdByNameAndEmail(UserVo vo) {
+
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        HashMap<String, Object> userInfo = userService.getUserIdByNameAndEmail(vo);
+
+        if (userInfo == null) {
+            data.put("result", "fail");
+        } else {
+            data.put("result", "success");
+            data.put("userInfo", userInfo);
+        }
+
+        return data;
+    }
+
+    @RequestMapping(value = "getUserQuestionById", method = RequestMethod.GET)
+    public HashMap<String, Object> getUserQuestionById(UserVo vo) {
+
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        HashMap<String, Object> userInfo = userService.getUserQquestionById(vo);
+
+        if (userInfo == null) {
+            data.put("result", "fail");
+        } else {
+            data.put("result", "success");
+            data.put("userInfo", userInfo);
+        }
+
+        System.out.println(data.get("userInfo").toString());
+
+        return data;
+    }
+
+    @RequestMapping("getUserPwByfindAnswer")
+    public HashMap<String, Object> getUserPwByfindAnswer(UserVo param) {
+
+        HashMap<String, Object> data = new HashMap<String, Object>();
+        UserVo userInfo = userService.getUserPwByfindAnswer(param);
+
+        if (userInfo == null) {
+            data.put("result", "fail");
+        } else {
+            String email = userInfo.getUser_email();
+            String name = userInfo.getUser_nickname();
+            data.put("result", "success");
+
+            Random random = new Random();
+            int checkNum = random.nextInt(888888) + 111111;
+
+            String setFrom = "관리자";
+            String toMail = email;
+            String title = "임시비밀번호 발급 메일입니다.";
+            String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + name + "님의 임시비밀번호는 " + checkNum + "입니다." + "<br>"
+                    + "로그인 후 비밀번호를 반드시 변경해주세요.";
+            String num = "";
+
+            num = Integer.toString(checkNum);
+            param.setUser_pw(num);
+            String password = param.getUser_pw();
+            password = MessageDigestUtil.getPasswordHashCode(password);
+            param.setUser_pw(password);
+            userService.getUserUpdatePw(param);
+
+            MailSenderThread mst = new MailSenderThread(javaMailSender, toMail, content, title, setFrom);
+            mst.start();
+        }
 
         return data;
     }

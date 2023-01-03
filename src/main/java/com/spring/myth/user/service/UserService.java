@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Service
 public class UserService {
@@ -22,7 +23,6 @@ public class UserService {
         String password = param.getUser_pw();
         password = MessageDigestUtil.getPasswordHashCode(password);
         param.setUser_pw(password);
-
         userSQLMapper.insertUser(param);
     }
 
@@ -60,5 +60,25 @@ public class UserService {
     /* 비밀번호 찾기 힌트 */
     public ArrayList<QuestionVo> getJoinQuestionList() {
         return userSQLMapper.getJoinQuestionList();
+    }
+    
+    /* 아이디 찾기 */
+    public HashMap<String, Object> getUserIdByNameAndEmail(UserVo param) {
+        return userSQLMapper.getUserIdByNameAndEmail(param.getUser_nickname(), param.getUser_email());
+    }
+
+    /* 비밀번호 찾기 질문 */
+    public HashMap<String, Object> getUserQquestionById(UserVo param) {
+        return userSQLMapper.getUserQuestionById(param.getUser_id());
+    }
+
+    /* 비밀번호 찾기 질문 답변 */
+    public UserVo getUserPwByfindAnswer(UserVo param) {
+        return userSQLMapper.getUserPwByfindAnswer(param);
+    }
+
+    /* 임시비밀번호 변경 */
+    public void getUserUpdatePw(UserVo param) {
+        userSQLMapper.getUserUpdatePw(param);
     }
 }

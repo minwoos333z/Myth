@@ -5,6 +5,7 @@ import com.spring.myth.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface UserSQLMapper {
 
@@ -31,4 +32,16 @@ public interface UserSQLMapper {
 
     /* 비밀번호 힌트 */
     public ArrayList<QuestionVo> getJoinQuestionList();
+
+    /* 아이디 찾기 */
+    public HashMap<String, Object> getUserIdByNameAndEmail(@Param("user_nickname") String user_nickname, @Param("user_email") String user_email);
+
+    /* 비밀번호 찾기 질문 */
+    public HashMap<String, Object> getUserQuestionById(@Param("user_id") String user_id);
+
+    /* 비밀번호 찾기 질문 답변 */
+    public UserVo getUserPwByfindAnswer(UserVo param);
+
+    /* 임시 비밀번호 변경 */
+    public void getUserUpdatePw(UserVo param);
 }

@@ -64,4 +64,9 @@ public class UserRootController {
 
         return "user/joinUserCompletPage";
     }
+
+    @RequestMapping(value = "findUserInfoPage", method = RequestMethod.GET)
+    public String findUserInfoPage() {
+        return "user/findUserInfoPage";
+    }
 }

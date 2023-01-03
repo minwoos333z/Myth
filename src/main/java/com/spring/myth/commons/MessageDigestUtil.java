@@ -6,7 +6,7 @@ public class MessageDigestUtil {
 
     public static String getPasswordHashCode(String password) {
 
-        password = password + "!@spring";
+        password = password + "!@ja";
 
         String hashCode = null;
 

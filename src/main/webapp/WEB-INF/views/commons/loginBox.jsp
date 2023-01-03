@@ -36,6 +36,7 @@
                                 </div>
                                 <div class="login_etcBox">
                                     <a href="../user/userAgree">회원가입</a>
+                                    <a href="../user/findUserInfoPage">ID/PW찾기</a>
                                 </div>
                             </div>
                         </div>
