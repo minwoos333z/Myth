@@ -99,6 +99,7 @@
                     <th scope="col">작성자</th>
                     <th scope="col">작성일</th>
                     <th scope="col">조회수</th>
+                    <th scope="col">좋아요수</th>
                     </thead>
 
                     <tbody>
@@ -110,6 +111,7 @@
                             <td class="text-center">${data.userVo.user_nickname}(${data.userVo.user_id})</td>
                             <td class="text-center"><fmt:formatDate value="${data.boardVo.board_write_date }" pattern="yyyy:MM:dd: HH:mm:ss" /></td>
                             <td class="text-center">${data.boardVo.board_readcount}</td>
+                            <td class="text-center">${data.totalLikeCount}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

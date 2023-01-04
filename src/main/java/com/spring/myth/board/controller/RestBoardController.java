@@ -2,6 +2,7 @@ package com.spring.myth.board.controller;
 
 import com.spring.myth.board.service.BoardService;
 import com.spring.myth.vo.BoardLikeVo;
+import com.spring.myth.vo.CommentVo;
 import com.spring.myth.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,5 +38,19 @@ public class RestBoardController {
         boardService.doLike(param);
         return data;
 
+    }
+
+    @RequestMapping(value = "writeComment", method = RequestMethod.POST)
+    public HashMap<String, Object> writeComment(CommentVo param, HttpSession session) {
+
+        HashMap<String, Object> data = new HashMap<String, Object>();
+        UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
+
+        int userNo = sessionUser.getUser_no();
+        param.setUser_no(userNo);
+
+        boardService.insertComment(param);
+
+        return data;
     }
 }

@@ -2,10 +2,7 @@ package com.spring.myth.board.mapper;
 
 import java.util.ArrayList;
 
-import com.spring.myth.vo.BoardLikeVo;
-import com.spring.myth.vo.BoardVo;
-import com.spring.myth.vo.CategoryVo;
-import com.spring.myth.vo.ReadPageVo;
+import com.spring.myth.vo.*;
 import org.apache.ibatis.annotations.Param;
 
 public interface BoardSQLMapper {
@@ -68,5 +65,11 @@ public interface BoardSQLMapper {
 
     /* 게시글 좋아요 갯수 */
     public int getTotalLikeCount(@Param("board_no") int board_no);
+
+    /* 게시글 댓글 작성 */
+    public void insertComment(CommentVo param);
+
+    /* 게시글 댓글 불러오기 */
+    public ArrayList<CommentVo> getCommentList(@Param("board_no") int board_no);
 
 }

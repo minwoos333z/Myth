@@ -50,6 +50,7 @@ public class BoardService {
         ArrayList<BoardVo> boardVoList = boardSQLMapper.getBoardCategoryList(category_no);
         for (BoardVo boardVo : boardVoList) {
             int userNo = boardVo.getUser_no();
+            int totalLikeCount = boardSQLMapper.getTotalLikeCount(boardVo.getBoard_no());
             UserVo userVo = userSQLMapper.getUserByNo(userNo);
             CategoryVo categoryVo = boardSQLMapper.getCategoryByNo(boardVo.getCategory_no());
 
@@ -58,6 +59,7 @@ public class BoardService {
             map.put("userVo", userVo);
             map.put("boardVo", boardVo);
             map.put("categoryVo", categoryVo);
+            map.put("totalLikeCount", totalLikeCount);
 
             dataList.add(map);
         }
@@ -83,10 +85,12 @@ public class BoardService {
         BoardVo boardVo = boardSQLMapper.getBoardByNo(board_no);
         UserVo userVo = userSQLMapper.getUserByNo(boardVo.getUser_no());
         CategoryVo categoryVo = boardSQLMapper.getCategoryByNo(boardVo.getCategory_no());
+        int totalLikeCount = boardSQLMapper.getTotalLikeCount(boardVo.getBoard_no());
 
         map.put("userVo", userVo);
         map.put("categoryVo", categoryVo);
         map.put("boardVo", boardVo);
+        map.put("totalLikeCount", totalLikeCount);
 
         return map;
     }
@@ -156,5 +160,31 @@ public class BoardService {
     /* 게시글 좋아요 갯수 */
     public int getTotalLikeCount(int board_no) {
         return boardSQLMapper.getTotalLikeCount(board_no);
+    }
+
+    /* 게시글 댓글 작성*/
+    public void insertComment(CommentVo param) {
+        boardSQLMapper.insertComment(param);
+    }
+
+    public ArrayList<HashMap<String, Object>> getCommentList(int board_no) {
+
+        ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
+        ArrayList<CommentVo> commentVoList = boardSQLMapper.getCommentList(board_no);
+
+        for (CommentVo commentVo : commentVoList) {
+            int userNo = commentVo.getUser_no();
+            UserVo userVo = userSQLMapper.getUserByNo(userNo);
+            BoardVo boardVo = boardSQLMapper.getBoardByNo(board_no);
+
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put("userVo", userVo);
+            map.put("boardVo", boardVo);
+            map.put("commentVo", commentVo);
+
+            dataList.add(map);
+        }
+
+        return dataList;
     }
 }

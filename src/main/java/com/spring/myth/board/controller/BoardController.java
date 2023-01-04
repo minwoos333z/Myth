@@ -124,8 +124,10 @@ public class BoardController {
         }
 
         HashMap<String, Object> data = boardService.getBoard(board_no);
+        ArrayList<HashMap<String, Object>> dataList = boardService.getCommentList(board_no);
 
         model.addAttribute("data", data);
+        model.addAttribute("dataList", dataList);
 
         int totalLikeCount = boardService.getTotalLikeCount(board_no);
         model.addAttribute("totalLikeCount",totalLikeCount);
@@ -186,5 +188,13 @@ public class BoardController {
         System.out.println(board_no + "입니다");
 
         return "redirect:./postMainPage";
+    }
+
+    @RequestMapping(value = "writeCommentPage", method = RequestMethod.POST)
+    public String writeCommentPage(@ModelAttribute("commentVo") CommentVo commentVo,Model model) {
+
+        model.addAttribute("boardNo", commentVo.getBoard_no());
+
+        return "board/writeCommentPage";
     }
 }

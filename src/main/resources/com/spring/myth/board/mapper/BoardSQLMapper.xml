@@ -119,4 +119,20 @@
     <select id="getTotalLikeCount" resultType="int">
         SELECT count(*) FROM myth_board_like WHERE board_no = #{board_no}
     </select>
+
+    <!-- 게시글 댓글 작성 -->
+    <insert id="insertComment">
+        INSERT INTO myth_comment VALUES(
+                                        myth_comment_seq.nextval,
+                                        #{board_no},
+                                        #{user_no},
+                                        #{comment_content},
+                                        SYSDATE
+                                       )
+    </insert>
+
+    <!-- 게시글 댓글 불러오기 -->
+    <select id="getCommentList" resultType="com.spring.myth.vo.CommentVo">
+        SELECT * FROM myth_comment WHERE board_no = #{board_no}
+    </select>
 </mapper>

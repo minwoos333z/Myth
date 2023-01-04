@@ -52,6 +52,14 @@
             formObj.submit();
         }
 
+        function writeCommentPage(boardNo) {
+            var formObj = $("form[name='deleteForm']");
+            $("#BoardNo").attr("value", boardNo);
+            formObj.attr("method", "post");
+            formObj.attr("action", "/board/writeCommentPage");
+            formObj.submit();
+        }
+
         function postDeleteContentPage(boardNo) {
             if (confirm("정말로 게시글을 삭제 하시겠습니까?")) {
                 var formObj = $("form[name='deleteForm']");
@@ -59,7 +67,6 @@
                 formObj.attr("method", "post");
                 formObj.attr("action", "/board/deletePostContentProcess");
                 formObj.submit();
-                alert(boardNo);
             }
         }
 
@@ -137,6 +144,45 @@
                 </tr>
 
             </table>
+
+            <div class="row mt-3">
+                <table class="table" style="border-top:1px solid steelblue; border-bottom:2px solid steelblue">
+                    <thead>
+                    <tr>
+                        <th scope="col">댓글번호</th>
+                        <th scope="col">댓글내용</th>
+                        <th scope="col">댓글작성자</th>
+                        <th scope="col">작성일</th>
+                        <th scope="col">좋아요수</th>
+                        <th scope="col">삭제</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <c:forEach items="${dataList }" var="date">
+                        <tr>
+                            <th class="text-center">${date.commentVo.comment_no }</th>
+                            <th class="text-center">${date.commentVo.comment_content }</th>
+                            <th class="text-center">${date.userVo.user_nickname }</th>
+                            <th class="text-center"><fmt:formatDate value="${date.commentVo.comment_write_date }" pattern="yyyy년MM월dd일 HH시 mm분 ss초" /></th>
+                            <th class="text-center">${date.totalCommentLikeCount }</th>
+                            <c:choose>
+                                <c:when test="${sessionUser.user_no == date.commentVo.user_no }">
+                                    <th><a href="javascript:deleteCommentPage(${date.commentVo.comment_no }, ${date.commentVo.board_no })" type="button" class="btn btn-outline-primary">댓글삭제
+                                    </a>
+                                        <a href="javascript:goCommentUpdatePage(${date.commentVo.comment_no });" type="button" class="btn btn-outline-primary">댓글수정</a>
+                                        <a href="../board/commentLikeProcess?board_no=${date.commentVo.board_no }&comment_no=${date.commentVo.comment_no}" type="button" class="btn btn-outline-primary">댓글 좋아요</a>
+                                    </th>
+                                </c:when>
+                                <c:otherwise>
+                                    <th><a href="../board/commentLikeProcess?board_no=${date.commentVo.board_no }&comment_no=${date.commentVo.comment_no}" type="button" class="btn btn-outline-primary">댓글 좋아요</a></th>
+                                </c:otherwise>
+                            </c:choose>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a href="./postMainPage" class="btn btn-outline-primary" type="button">목록으로</a>

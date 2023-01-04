@@ -135,15 +135,6 @@ window.addEventListener("DOMContentLoaded", function () {
             '<div class="col-3"></div>' +
             '</div>' +
 
-            '<div class="row mt-3">' +
-            '<div class="col-2">' +
-            '<select class="form-select" id="firstPhone" aria-label="Default select example">' +
-            '<option value="010">010</option>' +
-            '<option value="019">019</option>' +
-            '<option value="02">02</option>' +
-            '</select>' +
-            '</div>' +
-
             '<div class="col fs-5"><input class="form-control" id="userPhone" type="text" placeholder="" aria-label="default input example"></div>' +
             '<div class="col-3"></div>' +
             '</div>' +
