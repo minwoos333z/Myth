@@ -197,4 +197,13 @@ public class BoardController {
 
         return "board/writeCommentPage";
     }
+
+    @RequestMapping(value = "updateCommentPage", method=RequestMethod.POST)
+    public String updateCommentPage(int comment_no, @ModelAttribute("commentVo") CommentVo commentVo, Model model) {
+
+        HashMap<String, Object> data = boardService.getComment(comment_no);
+        model.addAttribute("data", data);
+
+        return "board/updateCommentPage";
+    }
 }

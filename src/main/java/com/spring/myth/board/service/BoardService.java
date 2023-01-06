@@ -167,6 +167,7 @@ public class BoardService {
         boardSQLMapper.insertComment(param);
     }
 
+    /* 게시글 전체 댓글 불러오기 */
     public ArrayList<HashMap<String, Object>> getCommentList(int board_no) {
 
         ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
@@ -186,5 +187,25 @@ public class BoardService {
         }
 
         return dataList;
+    }
+
+    /* 댓글 불러오기 (수정용) */
+    public HashMap<String, Object> getComment(int comment_no) {
+
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        CommentVo commentVo = boardSQLMapper.getCommentByNo(comment_no);
+        map.put("commentVo", commentVo);
+
+        return map;
+    }
+
+    /* 댓글 수정하기 */
+    public void updateComment(CommentVo param) {
+        boardSQLMapper.updateComment(param);
+    }
+
+    /**댓글 삭제*/
+    public void deleteComment(int comment_no) {
+        boardSQLMapper.deleteComment(comment_no);
     }
 }

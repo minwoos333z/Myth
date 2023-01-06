@@ -72,4 +72,13 @@ public interface BoardSQLMapper {
     /* 게시글 댓글 불러오기 */
     public ArrayList<CommentVo> getCommentList(@Param("board_no") int board_no);
 
+    /* 댓글 수정 불러오기 */
+    public CommentVo getCommentByNo(int comment_no);
+
+    /* 댓글 수정하기 */
+    public void updateComment(CommentVo param);
+
+    /* 댓글 삭제 */
+    public void deleteComment(int comment_no);
+
 }

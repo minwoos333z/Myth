@@ -5,11 +5,13 @@ import com.spring.myth.vo.BoardLikeVo;
 import com.spring.myth.vo.CommentVo;
 import com.spring.myth.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.HashMap;
 
 @RestController
@@ -52,5 +54,34 @@ public class RestBoardController {
         boardService.insertComment(param);
 
         return data;
+    }
+
+    @RequestMapping(value = "updateComment", method = RequestMethod.POST)
+    public HashMap<String, Object> updateComment(@Valid CommentVo commentVo, BindingResult result) {
+
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        if (result.hasErrors()) {
+            data.put("result", "error");
+            return data;
+        }
+
+        data.put("result", "success");
+
+        boardService.updateComment(commentVo);
+        return data;
+    }
+
+    @RequestMapping(value="deleteComment", method = RequestMethod.POST)
+    public HashMap<String, Object> deleteComment(int comment_no) {
+        HashMap<String, Object> data = new HashMap<String, Object>();
+
+        data.put("result", "success");
+        boardService.deleteComment(comment_no);
+
+        System.out.println("comment_no : " + comment_no);
+
+        return data;
+
     }
 }

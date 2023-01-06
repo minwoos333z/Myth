@@ -17,6 +17,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <!-- bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -68,6 +69,14 @@
                 formObj.attr("action", "/board/deletePostContentProcess");
                 formObj.submit();
             }
+        }
+
+        function goCommentUpdatePage(commentNo) {
+            var formObj = $("form[name='commentForm']");
+            $("#COMMENT_NO").attr("value", commentNo);
+            formObj.attr("method", "post");
+            formObj.attr("action", "updateCommentPage");
+            formObj.submit();
         }
 
     </script>
@@ -166,12 +175,12 @@
                             <th class="text-center">${date.userVo.user_nickname }</th>
                             <th class="text-center"><fmt:formatDate value="${date.commentVo.comment_write_date }" pattern="yyyy년MM월dd일 HH시 mm분 ss초" /></th>
                             <th class="text-center">${date.totalCommentLikeCount }</th>
+                            <input type="hidden" id="commentNo" value="${date.commentVo.comment_no}">
                             <c:choose>
                                 <c:when test="${sessionUser.user_no == date.commentVo.user_no }">
-                                    <th><a href="javascript:deleteCommentPage(${date.commentVo.comment_no }, ${date.commentVo.board_no })" type="button" class="btn btn-outline-primary">댓글삭제
-                                    </a>
+                                    <th>
+                                        <button type="button" class="btn btn-outline-primary" id="deleteComment">댓글삭제</button>
                                         <a href="javascript:goCommentUpdatePage(${date.commentVo.comment_no });" type="button" class="btn btn-outline-primary">댓글수정</a>
-                                        <a href="../board/commentLikeProcess?board_no=${date.commentVo.board_no }&comment_no=${date.commentVo.comment_no}" type="button" class="btn btn-outline-primary">댓글 좋아요</a>
                                     </th>
                                 </c:when>
                                 <c:otherwise>
@@ -202,6 +211,10 @@
 
             <form name="deleteForm" role="form" method="post">
                 <input type="hidden" id="BoardNo" name="board_no" value="">
+            </form>
+
+            <form name="commentForm" role="form" method="post">
+                <input type="hidden" id="COMMENT_NO" name="comment_no" value="">
             </form>
 
             <input type="hidden" id="like_board_no" value="${data.boardVo.board_no}">

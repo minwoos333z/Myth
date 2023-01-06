@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: hanby
-  Date: 2023-01-02
-  Time: 오후 1:24
+  Date: 2023-01-04
+  Time: 오후 12:19
   To change this template use File | Settings | File Templates.
 --%>
 
@@ -41,15 +41,8 @@
     <script type="text/javascript" src="../resources/js/commons/loginBox.js"></script>
     <script type="text/javascript" src="../resources/js/frame/dropdown.js"></script>
     <script type="text/javascript" src="../resources/js/frame/jquery-3.6.0.min.js"></script>
-
+    <script type="text/javascript" src="../resources/js/board/updateCommentPage.js"></script>
     <script type="text/javascript">
-        function cmaTextareaSize(obj, bsize) { // 객체명, 기본사이즈
-            var sTextarea = document.getElementById(obj);
-            var csize = (sTextarea.scrollHeight >= bsize) ? sTextarea.scrollHeight
-                + "px" : bsize + "px";
-            sTextarea.style.height = bsize + "px";
-            sTextarea.style.height = csize;
-        }
 
         function goPage(boardNo) {
             var formObj = $("form[name='readForm']");
@@ -66,7 +59,6 @@
             sTextarea.style.height = bsize + "px";
             sTextarea.style.height = csize;
         }
-
     </script>
 
 </head>
@@ -88,7 +80,7 @@
         <div class="col">
             <!-- page Title -->
             <div class="row mt-1 conTitleArea">
-                <h3 class="conTItle"><i class="bi bi-list"></i> 게시글 수정</h3>
+                <h3 class="conTItle"><i class="bi bi-list"></i> 댓글 수정</h3>
             </div>
 
             <form name="readForm" role="form">
@@ -96,39 +88,12 @@
             </form>
 
             <!-- 페이지별 내용 시작-->
-            <form:form action="./updatePostContentProcess" modelAttribute="boardVo" id="updateContentForm" method="POST">
-                <div class="row mt-2">
-                    <div class="col">
-                        <select class="form-select" name="category_no" id="boardCategory"
-                                aria-label="Default select example">
-                            <c:forEach items="${date.list}" var="category">
-                                <option value="${category.category_no}">
-                                        ${category.category_name}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="col my-auto"></div>
-                </div>
-
+            <form:form action="./updateCommentProcess" modelAttribute="commentVo" id="updateCommentForm" method="POST">
                 <div class="row mt-3">
                     <div class="col">
-                        작성자 : <input type="text" value="${data.userVo.user_nickname }" disabled="disabled">
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col">
-                        제목 : <form:input type="text" class="from-control" value="${data.boardVo.board_title }" path="board_title"/>
-                    </div>
-                    <div class="col my-auto"><form:errors path="board_title" id="error_message" /></div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col">
-									<textarea onkeyup="cmaTextareaSize('floatingContent', 200);" class="form-control"
-                                              id="floatingContent" name="board_content">${data.boardVo.board_content }
-                                    </textarea>
+                        <form:textarea onkeyup="cmaTextareaSize('floatingContent', 400);"
+                                       class="form-control" id="floatingContent" placeholder="댓글 내용"
+                                       path="comment_content" />
                     </div>
                 </div>
 
@@ -136,15 +101,15 @@
                     <div class="col"></div>
                     <div class="col"></div>
                     <div class="col">
-                        <a href="javascript:goPage(${data.boardVo.board_no });" class="btn btn-dark" style="float: right;">수정취소</a>
-                        <input type="submit" class="btn btn-dark" style="float: right;" value="수정완료">
+                        <a href="javascript:goPage(${data.commentVo.board_no });" class="btn btn-dark" style="float: right;">수정취소</a>
+                        <button type="button" class="btn btn-dark" style="float: right;" id="updateCommentButton">수정완료</button>
                     </div>
                 </div>
 
-                <input type="hidden" name="board_no" value="${data.boardVo.board_no }">
+                <input type="hidden" id="commentNo" name="comment_no" value="${data.commentVo.comment_no }">
+                <input type="hidden" id="boardNo" name="board_no" value="${data.commentVo.board_no}">
 
             </form:form>
-
             <!-- 페이지별 내용 끝 -->
         </div>
     </div>
