@@ -212,4 +212,26 @@
                          ) t2
     </select>
 
+    <select id="getBoardCount" resultType="int">
+        SELECT COUNT(*)
+        FROM myth_board fb , myth_user fm , myth_category fc
+        WHERE fb.user_no = fm.user_no
+        <if test="category != null">
+            <choose>
+                <when test="category == 'title'">
+                    AND fb.board_title LIKE '%' || #{keyword} || '%'
+                </when>
+                <when test="category =='content'">
+                    AND fb.board_content LIKE '%' || #{keyword} || '%'
+                </when>
+                <when test="category =='nick'">
+                    AND fm.user_nickname LIKE '%' || #{keyword} || '%'
+                </when>
+                <when test="category == 'category'">
+                    AND fc.category_name LIKE '%' || #{keyword} || '%'
+                </when>
+            </choose>
+        </if>
+    </select>
+
 </mapper>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,23 +28,53 @@ public class BoardController {
     BoardService boardService;
 
     @RequestMapping(value = "postMainPage", method = RequestMethod.GET)
-    public String postMainPage(Model model, @RequestParam(value = "category_no", defaultValue = "0") int category_no, String category, String keyword) {
+    public String postMainPage(Model model, @RequestParam(value = "category_no", defaultValue = "0") int category_no, String category, String keyword,
+                               @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
 
         ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
 
         if (category_no != 0) {
-            dataList = boardService.getBoardList(category_no, category, keyword);
+            dataList = boardService.getBoardList(category_no, category, keyword, pageNum);
         } else {
-            dataList = boardService.getBoardList(category, keyword);
+            dataList = boardService.getBoardList(category, keyword, pageNum);
         }
 
-        HashMap<String, Object> data = new HashMap<String, Object>();
+        int count = boardService.getBoardCount(category, keyword);
 
-        ArrayList<CategoryVo> list = boardService.getCateogryList();
+        int totalPageCount = (int) Math.ceil(count / 10.0);
 
-        data.put("list", list);
+        // 1 2 3 4 5 , 6 7 8 9 10
+        int startPage = ((pageNum - 1) / 5) * 5 + 1;
+        int endPage = ((pageNum - 1) / 5 + 1) * (5);
+        if (endPage > totalPageCount) {
+            endPage = totalPageCount;
+        }
 
-        model.addAttribute("data", data);
+        // 페이징 링크 검색 추가 옵션...
+        String additionalParam = "";
+
+        if (category != null) {
+            additionalParam += "&category=" + category;
+        }
+
+        if (keyword != null) {
+            // URL encoding -> 영어 숫자 특수 문자 아닌 값이 존재 할때...
+            try {
+                keyword = URLEncoder.encode(keyword, "utf-8");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            additionalParam += "&keyword=" + keyword;
+        }
+
+        model.addAttribute("additionalParam", additionalParam);
+        model.addAttribute("count", count);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("totalPageCount", totalPageCount);
+
         model.addAttribute("dataList", dataList);
 
         return "board/postMainPage";

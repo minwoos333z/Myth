@@ -94,14 +94,17 @@ public interface BoardSQLMapper {
     public int totalCommentLikeCount(int comment_no);
 
     /* 게시글 검색 (제목) */
-    public ArrayList<BoardVo> selectByTitle(String title);
+    public ArrayList<BoardVo> selectByTitle(@Param("title")String title, @Param("pageNum") int pageNum);
 
     /* 게시글 검색 (내용) */
-    public ArrayList<BoardVo> selectByContent(String content);
+    public ArrayList<BoardVo> selectByContent(@Param("content")String content, @Param("pageNum") int pageNum);
 
     /* 게시글 검색 (작성자) */
-    public ArrayList<BoardVo> selectByNickName(String user_nickname);
+    public ArrayList<BoardVo> selectByNickName(@Param("user_nickname")String user_nickname, @Param("pageNum") int pageNum);
 
     /* 게시글 검색 (카테고리) */
-    public ArrayList<BoardVo> selectByCategoryName(String category_name);
+    public ArrayList<BoardVo> selectByCategoryName(@Param("category_name") String category_name, @Param("pagNum") int pageNum);
+
+    /* 게시글 총갯수 */
+    public int getBoardCount(@Param("category") String category, @Param("keyword") String keyword);
 }

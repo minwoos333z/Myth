@@ -19,7 +19,7 @@ public class BoardService {
     UserSQLMapper userSQLMapper;
 
     /* 게시글 전체 출력 */
-    public ArrayList<HashMap<String, Object>> getBoardList(String category, String keyword) {
+    public ArrayList<HashMap<String, Object>> getBoardList(String category, String keyword, int pageNum) {
 
         int category_no = 0;
 
@@ -29,28 +29,30 @@ public class BoardService {
         if (category != null || keyword != null) {
             switch (category) {
                 case "title":
-                    boardVoList = boardSQLMapper.selectByTitle(keyword);
+                    boardVoList = boardSQLMapper.selectByTitle(keyword, pageNum);
                     break;
                 case "content":
-                    boardVoList = boardSQLMapper.selectByContent(keyword);
+                    boardVoList = boardSQLMapper.selectByContent(keyword, pageNum);
                     break;
                 case "nick":
-                    boardVoList = boardSQLMapper.selectByNickName(keyword);
+                    boardVoList = boardSQLMapper.selectByNickName(keyword, pageNum);
                     break;
                 case "category":
-                    boardVoList = boardSQLMapper.selectByCategoryName(keyword);
+                    boardVoList = boardSQLMapper.selectByCategoryName(keyword, pageNum);
             }
         }
 
         for (BoardVo boardVo : boardVoList) {
             int userNo = boardVo.getUser_no();
             UserVo userVo = userSQLMapper.getUserByNo(userNo);
+            int totalLikeCount = boardSQLMapper.getTotalLikeCount(boardVo.getBoard_no());
             CategoryVo categoryVo = boardSQLMapper.getCategoryByNo(boardVo.getCategory_no());
             HashMap<String, Object> map = new HashMap<String, Object>();
 
             map.put("userVo", userVo);
             map.put("boardVo", boardVo);
             map.put("categoryVo", categoryVo);
+            map.put("totalLikeCount", totalLikeCount);
 
             dataList.add(map);
         }
@@ -58,7 +60,7 @@ public class BoardService {
     }
 
     /* 게시글 카테고리별 출력 */
-    public ArrayList<HashMap<String, Object>> getBoardList(int category_no, String category, String keyword) {
+    public ArrayList<HashMap<String, Object>> getBoardList(int category_no, String category, String keyword, int pageNum) {
 
         ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
         ArrayList<BoardVo> boardVoList = boardSQLMapper.getBoardCategoryList(category_no);
@@ -66,13 +68,13 @@ public class BoardService {
         if (category != null || keyword != null) {
             switch (category) {
                 case "title":
-                    boardVoList = boardSQLMapper.selectByTitle(keyword);
+                    boardVoList = boardSQLMapper.selectByTitle(keyword, pageNum);
                     break;
                 case "content":
-                    boardVoList = boardSQLMapper.selectByContent(keyword);
+                    boardVoList = boardSQLMapper.selectByContent(keyword, pageNum);
                     break;
                 case "nick":
-                    boardVoList = boardSQLMapper.selectByNickName(keyword);
+                    boardVoList = boardSQLMapper.selectByNickName(keyword, pageNum);
                     break;
             }
         }
@@ -94,6 +96,11 @@ public class BoardService {
         }
 
         return dataList;
+    }
+
+    /* 게시글 총 갯수 */
+    public int getBoardCount(String category, String keyword) {
+        return boardSQLMapper.getBoardCount(category, keyword);
     }
 
     /* 카테고리 목록 출력 */
