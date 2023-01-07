@@ -171,5 +171,9 @@
         SELECT count(*) FROM myth_comment_like WHERE comment_no = #{comment_no} AND user_no = #{user_no}
     </select>
 
+    <!-- 댓글 좋아요 총갯수 -->
+    <select id="totalCommentLikeCount" resultType="int">
+        SELECT count(*) FROM myth_comment_like WHERE comment_no = #{comment_no}
+    </select>
 
 </mapper>
