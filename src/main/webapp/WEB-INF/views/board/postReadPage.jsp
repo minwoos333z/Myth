@@ -181,10 +181,11 @@
                                     <th>
                                         <button type="button" class="btn btn-outline-primary" id="deleteComment">댓글삭제</button>
                                         <a href="javascript:goCommentUpdatePage(${date.commentVo.comment_no });" type="button" class="btn btn-outline-primary">댓글수정</a>
+                                        <button type="button" class="btn btn-outline-primary" id="doCommentLike">댓글 좋아요</button>
                                     </th>
                                 </c:when>
                                 <c:otherwise>
-                                    <th><a href="../board/commentLikeProcess?board_no=${date.commentVo.board_no }&comment_no=${date.commentVo.comment_no}" type="button" class="btn btn-outline-primary">댓글 좋아요</a></th>
+                                    <th><button type="button" class="btn btn-outline-primary" id="doCommentLike">댓글 좋아요</button></th>
                                 </c:otherwise>
                             </c:choose>
                         </tr>

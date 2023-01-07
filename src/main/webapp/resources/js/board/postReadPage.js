@@ -33,4 +33,24 @@ window.addEventListener("DOMContentLoaded", function () {
             });
         }
     });
+
+    $("#doCommentLike").click(function() {
+        $.ajax({
+            type: "post",
+            url: "./doCommentLike",
+            data: {
+                comment_no: $("#commentNo").val()
+            },
+            dataType: "json",
+            // contentType : "application/x-www-form-urlencoded", // post
+            success: function (data) {
+                if (data.result == "error") {
+                    alert(data.reason);
+                    return;
+                }
+                alert("댓글 좋아요을 완료 하였습니다.");
+                location.reload();
+            }
+        });
+    });
 });

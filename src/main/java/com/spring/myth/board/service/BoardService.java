@@ -175,6 +175,7 @@ public class BoardService {
 
         for (CommentVo commentVo : commentVoList) {
             int userNo = commentVo.getUser_no();
+            int totalCommentLikeCount = boardSQLMapper.totalCommentLikeCount(commentVo.getComment_no());
             UserVo userVo = userSQLMapper.getUserByNo(userNo);
             BoardVo boardVo = boardSQLMapper.getBoardByNo(board_no);
 
@@ -182,6 +183,7 @@ public class BoardService {
             map.put("userVo", userVo);
             map.put("boardVo", boardVo);
             map.put("commentVo", commentVo);
+            map.put("totalCommentLikeCount", totalCommentLikeCount);
 
             dataList.add(map);
         }
@@ -204,8 +206,24 @@ public class BoardService {
         boardSQLMapper.updateComment(param);
     }
 
-    /**댓글 삭제*/
+    /* 댓글 삭제 */
     public void deleteComment(int comment_no) {
         boardSQLMapper.deleteComment(comment_no);
+    }
+
+    /* 댓글 좋아요 */
+    public void doCommentLike(CommentLikeVo param) {
+        int count = getCommentMyLikeCount(param);
+
+        if (count <= 0) {
+            boardSQLMapper.doCommentLike(param);
+        } else {
+            boardSQLMapper.deleteCommentLike(param);
+        }
+    }
+
+    /* 댓글 좋아요 상태 */
+    public int getCommentMyLikeCount(CommentLikeVo param) {
+        return boardSQLMapper.getCommentMyLikeCount(param);
     }
 }

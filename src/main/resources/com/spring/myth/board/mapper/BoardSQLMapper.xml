@@ -150,4 +150,30 @@
     <delete id="deleteComment">
         DELETE FROM myth_comment WHERE comment_no = #{comment_no}
     </delete>
+
+    <!-- 댓글 좋아요 -->
+    <insert id="doCommentLike">
+        INSERT INTO myth_comment_like VALUES(
+                                             myth_comment_like_seq.nextval,
+                                             #{comment_no},
+                                             #{user_no},
+                                             SYSDATE
+                                            )
+    </insert>
+
+    <!-- 댓글 좋아요 취소 -->
+    <delete id="deleteCommentLike">
+        DELETE FROM myth_comment_like WHERE comment_no = #{comment_no} AND user_no = #{user_no}
+    </delete>
+
+    <!-- 댓글 좋아요 상태 -->
+    <select id="getCommentMyLikeCount" resultType="int">
+        SELECT count(*) FROM myth_comment_like WHERE comment_no = #{comment_no} AND user_no = #{user_no}
+    </select>
+
+    <!-- 댓글 좋아요 총갯수 -->
+    <select id="totalCommentLikeCount" resultType="int">
+        SELECT count(*) FROM myth_comment_like WHERE comment_no = #{comment_no}
+    </select>
+
 </mapper>

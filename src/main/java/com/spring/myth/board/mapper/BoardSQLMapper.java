@@ -81,4 +81,15 @@ public interface BoardSQLMapper {
     /* 댓글 삭제 */
     public void deleteComment(int comment_no);
 
+    /* 댓글 좋아요 */
+    public void doCommentLike(CommentLikeVo param);
+
+    /* 댓글 좋아요 상태 */
+    public int getCommentMyLikeCount(CommentLikeVo param);
+
+    /* 댓글 좋아요 삭제 */
+    public void deleteCommentLike(CommentLikeVo param);
+
+    /* 댓글 좋아요 총 갯수 */
+    public int totalCommentLikeCount(int comment_no);
 }
