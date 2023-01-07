@@ -206,4 +206,9 @@ public class BoardController {
 
         return "board/updateCommentPage";
     }
+
+    @RequestMapping(value = "makeError", method=RequestMethod.GET)
+    public void makeError() throws Exception {
+        throw new NullPointerException();
+    }
 }

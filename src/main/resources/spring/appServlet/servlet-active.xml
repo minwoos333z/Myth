@@ -40,4 +40,8 @@
         </interceptor>
     </interceptors>
 
+    <beans:bean class="com.spring.myth.commons.CustomExceptionReSolver">
+        <beans:property name="order" value="1" />
+    </beans:bean>
+
 </beans:beans>
