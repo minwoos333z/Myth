@@ -276,4 +276,11 @@ public class BoardService {
     public int getCommentMyLikeCount(CommentLikeVo param) {
         return boardSQLMapper.getCommentMyLikeCount(param);
     }
+
+    /* 첨부파일 목록 */
+    public ArrayList<HashMap<String, Object>> selectFileList(int board_no) {
+        ArrayList<HashMap<String, Object>> list = boardSQLMapper.selectFileList(board_no);
+
+        return list;
+    }
 }

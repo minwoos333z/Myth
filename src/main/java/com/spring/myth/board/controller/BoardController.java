@@ -210,9 +210,11 @@ public class BoardController {
 
         HashMap<String, Object> data = boardService.getBoard(board_no);
         ArrayList<HashMap<String, Object>> dataList = boardService.getCommentList(board_no);
+        ArrayList<HashMap<String, Object>> fileList = boardService.selectFileList(board_no);
 
         model.addAttribute("data", data);
         model.addAttribute("dataList", dataList);
+        model.addAttribute("fileList", fileList);
 
         int totalLikeCount = boardService.getTotalLikeCount(board_no);
         model.addAttribute("totalLikeCount", totalLikeCount);

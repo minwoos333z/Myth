@@ -1,6 +1,7 @@
 package com.spring.myth.board.mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.spring.myth.vo.*;
 import org.apache.ibatis.annotations.Param;
@@ -113,4 +114,8 @@ public interface BoardSQLMapper {
 
     /* 첨부파일 */
     public void insertFile(FileVo param);
+
+    /* 첨부파일 목록 */
+    public ArrayList<HashMap<String, Object>> selectFileList(int board_no);
+
 }

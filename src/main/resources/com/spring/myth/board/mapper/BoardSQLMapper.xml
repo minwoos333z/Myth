@@ -288,4 +288,9 @@
                                        )
     </insert>
 
+    <!-- 게시글 첨부파일 목록 -->
+    <select id="selectFileList" resultType="com.spring.myth.vo.FileVo">
+        SELECT * FROM myth_file WHERE board_no = #{board_no} AND file_del = 'N'
+    </select>
+
 </mapper>
