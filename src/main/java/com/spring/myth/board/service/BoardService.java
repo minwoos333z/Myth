@@ -25,7 +25,7 @@ public class BoardService {
 
         ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
 
-        ArrayList<BoardVo> boardVoList = boardSQLMapper.getBoardList();
+        ArrayList<BoardVo> boardVoList = boardSQLMapper.getBoardList(pageNum);
         if (category != null || keyword != null) {
             switch (category) {
                 case "title":
@@ -63,7 +63,7 @@ public class BoardService {
     public ArrayList<HashMap<String, Object>> getBoardList(int category_no, String category, String keyword, int pageNum) {
 
         ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
-        ArrayList<BoardVo> boardVoList = boardSQLMapper.getBoardCategoryList(category_no);
+        ArrayList<BoardVo> boardVoList = boardSQLMapper.getBoardCategoryList(category_no, pageNum);
 
         if (category != null || keyword != null) {
             switch (category) {
@@ -109,8 +109,22 @@ public class BoardService {
     }
 
     /* 게시글 작성 */
-    public void insertBoard(BoardVo param) {
+    public void insertBoard(BoardVo param, ArrayList<FileVo> fileVoList) {
+        int boardNo = boardSQLMapper.createBoardPk();
+        param.setBoard_no(boardNo);
+
+        System.out.println("게시글제목 : " + param.getBoard_title());
+        System.out.println("게시글내용 : " + param.getBoard_content());
+
         boardSQLMapper.insertBoard(param);
+
+        for (FileVo fileVo : fileVoList) {
+            fileVo.setBoard_no(boardNo);
+
+            System.out.println(fileVo.getOrg_file_name());
+
+            boardSQLMapper.insertFile(fileVo);
+        }
     }
 
     /* 게시글 상세보기 */

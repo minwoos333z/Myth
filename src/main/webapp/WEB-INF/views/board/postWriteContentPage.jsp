@@ -73,7 +73,17 @@
             </div>
 
             <!-- 페이지별 내용 시작-->
-            <form:form action="./postWriteContentProcess" modelAttribute="boardVo" method="POST">
+            <form:form action="./postWriteContentProcess" modelAttribute="boardVo"
+                       id="writeContentForm" enctype="multipart/form-data">
+                <div class="row mt-2">
+                    <div class="col">
+                        <form:input type="text" class="from-control" placeholder="글제목"
+                                    path="board_title" />
+                    </div>
+                    <div class="col my-auto">
+                        <form:errors path="board_title" id="error_message" />
+                    </div>
+                </div>
 
                 <div class="row mt-2">
                     <div class="col">
@@ -91,22 +101,18 @@
 
                 <div class="row mt-2">
                     <div class="col">
-                        <form:input type="text" class="from-control" placeholder="글제목"
-                                    path="board_title" />
-                    </div>
-                    <div class="col my-auto">
-                        <form:errors path="board_title" id="error_message" />
-                    </div>
-                </div>
-
-                <div class="row mt-2">
-                    <div class="col">
-                        <form:textarea onkeyup="cmaTextareaSize('floatingContent', 400);"
+                        <form:textarea onkeyup="cmaTextareaSize('floatingContent', 200);"
                                        class="form-control" id="floatingContent" placeholder="글 내용"
                                        path="board_content" />
                     </div>
                     <div class="col my-auto">
                         <form:errors path="board_content" id="error_message" />
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col">
+                        <input class="form-control form-control-sm" id="formFileSm" type="file" multiple name="uploadFiles">
                     </div>
                 </div>
 

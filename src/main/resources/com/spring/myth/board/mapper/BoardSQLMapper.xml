@@ -4,9 +4,24 @@
 
 <mapper namespace="com.spring.myth.board.mapper.BoardSQLMapper">
 
+    <!-- 게시글 번호 증가 -->
+    <select id="createBoardPk" resultType="int">
+        SELECT myth_board_seq.nextval FROM Dual
+    </select>
+
     <!-- 게시글 전체 출력 쿼리 -->
     <select id="getBoardList" resultType="com.spring.myth.vo.BoardVo">
-        SELECT * FROM myth_board
+        SELECT t2.* FROM (
+                             SELECT t1.* , ROWNUM AS rnum FROM (
+                                                                   SELECT nb.* FROM myth_board nb , myth_user nu
+                                                                   WHERE nb.user_no = nu.user_no
+                                                               ) t1
+                         ) t2
+
+		<![CDATA[
+		WHERE t2.rnum >= (#{pageNum} - 1) * 10 + 1
+          AND t2.rnum <= #{pageNum} * 10
+        ]]>
     </select>
 
     <!-- 카테고리 정보 출력 -->
@@ -16,7 +31,17 @@
 
     <!-- 카테고리별 게시글 출력 -->
     <select id="getBoardCategoryList" resultType="com.spring.myth.vo.BoardVo">
-        SELECT * FROM myth_board WHERE category_no = #{category_no}
+        SELECT t2.* FROM (
+                             SELECT t1.* , ROWNUM AS rnum FROM (
+                                                                   SELECT nb.* FROM myth_board nb , myth_user nu
+                                                                   WHERE nb.user_no = nu.user_no AND nb.category_no = #{category_no}
+                                                               ) t1
+                         ) t2
+
+		<![CDATA[
+		WHERE t2.rnum >= (#{pageNum} - 1) * 10 + 1
+          AND t2.rnum <= #{pageNum} * 10
+        ]]>
     </select>
 
     <!-- 카테고리 목록 출력 -->
@@ -27,7 +52,7 @@
     <!-- 게시글 작성 -->
     <insert id="insertBoard">
         INSERT INTO myth_board VALUES(
-                                      myth_board_seq.nextval,
+                                      #{board_no},
                                       #{user_no},
                                       #{category_no},
                                       #{board_title},
@@ -183,6 +208,10 @@
                                                                    WHERE nb.user_no = nu.user_no AND nb.board_title LIKE '%' || #{title} || '%' ORDER BY nb.board_no DESC
                                                                ) t1
                          ) t2
+        <![CDATA[
+        WHERE t2.rnum >= (#{pageNum} - 1) * 10 + 1
+          AND t2.rnum <= #{pageNum} * 10
+        ]]>
     </select>
 
     <select id="selectByContent" resultType="com.spring.myth.vo.BoardVo">
@@ -192,6 +221,10 @@
                                                                    WHERE nb.user_no = nu.user_no AND nb.board_content  LIKE '%' || #{content} || '%' ORDER BY nb.board_no DESC
                                                                ) t1
                          ) t2
+        <![CDATA[
+        WHERE t2.rnum >= (#{pageNum} - 1) * 10 + 1
+          AND t2.rnum <= #{pageNum} * 10
+        ]]>
     </select>
 
     <select id="selectByNickName" resultType="com.spring.myth.vo.BoardVo">
@@ -201,6 +234,10 @@
                                                                    WHERE nb.user_no = nu.user_no AND nu.user_nickname LIKE '%' || #{user_nickname} || '%' ORDER BY nb.board_no DESC
                                                                ) t1
                          ) t2
+        <![CDATA[
+        WHERE t2.rnum >= (#{pageNum} - 1) * 10 + 1
+          AND t2.rnum <= #{pageNum} * 10
+        ]]>
     </select>
 
     <select id="selectByCategoryName" resultType="com.spring.myth.vo.BoardVo">
@@ -210,6 +247,10 @@
                                                                    WHERE nb.category_no = nu.category_no AND nu.category_name LIKE '%' || #{category_name} || '%' ORDER BY nb.board_no DESC
                                                                ) t1
                          ) t2
+        <![CDATA[
+        WHERE t2.rnum >= (#{pageNum} - 1) * 10 + 1
+          AND t2.rnum <= #{pageNum} * 10
+        ]]>
     </select>
 
     <select id="getBoardCount" resultType="int">
@@ -233,5 +274,18 @@
             </choose>
         </if>
     </select>
+
+    <!-- 게시글 첩부파일 -->
+    <insert id="insertFile">
+        INSERT INTO myth_file VALUES (
+                                           myth_file_seq.nextval,
+                                           #{board_no},
+                                           #{org_file_name},
+                                           #{stored_file_name},
+                                           #{file_size},
+                                           SYSDATE,
+                                           'N'
+                                       )
+    </insert>
 
 </mapper>

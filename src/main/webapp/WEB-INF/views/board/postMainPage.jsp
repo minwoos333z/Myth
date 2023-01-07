@@ -132,7 +132,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <li class="page-item">
-                                        <a class="page-link" href="./mainPage?pageNum=${startPage-1 }${additionalParam}">&lt;</a>
+                                        <a class="page-link" href="./postMainPage?pageNum=${startPage-1 }${additionalParam}">&lt;</a>
                                     </li>
                                 </c:otherwise>
                             </c:choose>
@@ -141,12 +141,12 @@
                                 <c:choose>
                                     <c:when test="${currentPage == i}">
                                         <li class="page-item active">
-                                            <a class="page-link" href="./mainPage?pageNum=${i}${additionalParam}">${i}</a>
+                                            <a class="page-link" href="./postMainPage?pageNum=${i}${additionalParam}">${i}</a>
                                         </li>
                                     </c:when>
                                     <c:otherwise>
                                         <li class="page-item">
-                                            <a class="page-link" href="./mainPage?pageNum=${i}${additionalParam}">${i}</a>
+                                            <a class="page-link" href="./postMainPage?pageNum=${i}${additionalParam}">${i}</a>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>
@@ -160,7 +160,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <li class="page-item">
-                                        <a class="page-link" href="./mainPage?pageNum=${endPage+1 }${additionalParam}">&gt;</a>
+                                        <a class="page-link" href="./postMainPage?pageNum=${endPage+1 }${additionalParam}">&gt;</a>
                                     </li>
                                 </c:otherwise>
                             </c:choose>

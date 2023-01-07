@@ -7,14 +7,17 @@ import org.apache.ibatis.annotations.Param;
 
 public interface BoardSQLMapper {
 
+    /*게시글번호 증가*/
+    public int createBoardPk();
+
     /* 게시글 전체 출력 */
-    public ArrayList<BoardVo> getBoardList();
+    public ArrayList<BoardVo> getBoardList(@Param("pageNum") int pageNum);
 
     /* 카테고리 불러오기 */
     public CategoryVo getCategoryByNo(@Param("category_no") int category_no);
 
     /* 카테고리별 게시글 출력 */
-    public ArrayList<BoardVo> getBoardCategoryList(@Param("category_no") int category_no);
+    public ArrayList<BoardVo> getBoardCategoryList(@Param("category_no") int category_no, @Param("pageNum") int pageNum);
 
     /* 카테고리 목록 불러오기 */
     public ArrayList<CategoryVo> getCategoryList();
@@ -107,4 +110,7 @@ public interface BoardSQLMapper {
 
     /* 게시글 총갯수 */
     public int getBoardCount(@Param("category") String category, @Param("keyword") String keyword);
+
+    /* 첨부파일 */
+    public void insertFile(FileVo param);
 }

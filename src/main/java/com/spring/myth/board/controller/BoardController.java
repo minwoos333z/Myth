@@ -10,14 +10,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
 @Controller
 @RequestMapping(value = "/board/*")
@@ -95,7 +99,7 @@ public class BoardController {
     }
 
     @RequestMapping(value = "postWriteContentProcess", method = RequestMethod.POST)
-    public String postWriteContentProcess(@Valid BoardVo param, BindingResult result, HttpSession session, Model model) {
+    public String postWriteContentProcess(@Valid BoardVo param, BindingResult result, HttpSession session, Model model, MultipartFile[] uploadFiles) {
 
         if (result.hasErrors()) {
             HashMap<String, Object> data = new HashMap<String, Object>();
@@ -107,10 +111,60 @@ public class BoardController {
             model.addAttribute("data", data);
         }
 
+        ArrayList<FileVo> fileVoList = new ArrayList<FileVo>();
+
+        String uploadFolder = "C:/uploadFolder/";
+
+        System.out.println(uploadFiles);
+
+        if (uploadFiles != null) {
+            for (MultipartFile uploadFile : uploadFiles) {
+                if (uploadFile.isEmpty()) {
+                    System.out.println("isEmpty");
+                    continue;
+                }
+
+                // 날짜별 폴더 생성... 2022/01/19/
+                Date today = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+                String folderPath = sdf.format(today);
+
+                File todayFolder = new File(uploadFolder + folderPath);
+
+                if (!todayFolder.exists()) {
+                    todayFolder.mkdirs();
+                }
+
+                // 중복되지 않게 저장해야된다...!!...
+                // 방법 : 랜덤 + 시간
+                String fileName = "";
+                UUID uuid = UUID.randomUUID();
+                fileName += uuid.toString();
+
+                long currentTime = System.currentTimeMillis();
+                fileName += "_" + currentTime;
+
+                // 확장자 추가...
+                String originalFileName = uploadFile.getOriginalFilename();
+                String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+                fileName += ext;
+
+                try {
+                    uploadFile.transferTo(new File(uploadFolder + folderPath + fileName));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                FileVo fileVo = new FileVo();
+                fileVo.setOrg_file_name(originalFileName);
+                fileVo.setStored_file_name(fileName);
+                fileVoList.add(fileVo);
+            }
+        }
         UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
         param.setUser_no(sessionUser.getUser_no());
 
-        boardService.insertBoard(param);
+        boardService.insertBoard(param, fileVoList);
 
         return "redirect:./postMainPage";
     }
