@@ -92,4 +92,16 @@ public interface BoardSQLMapper {
 
     /* 댓글 좋아요 총 갯수 */
     public int totalCommentLikeCount(int comment_no);
+
+    /* 게시글 검색 (제목) */
+    public ArrayList<BoardVo> selectByTitle(String title);
+
+    /* 게시글 검색 (내용) */
+    public ArrayList<BoardVo> selectByContent(String content);
+
+    /* 게시글 검색 (작성자) */
+    public ArrayList<BoardVo> selectByNickName(String user_nickname);
+
+    /* 게시글 검색 (카테고리) */
+    public ArrayList<BoardVo> selectByCategoryName(String category_name);
 }

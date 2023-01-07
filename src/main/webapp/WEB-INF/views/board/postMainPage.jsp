@@ -69,17 +69,18 @@
                 <form action="../board/postMainPage" method="get">
                     <div class="row mt-3">
                         <div class="col">
-                            <select class="form-select" name="category_no" id="boardCategory"
-                                    aria-label="Default select example">
-                                <c:forEach items="${data.list}" var="category">
-                                    <option value="${category.category_no}">
-                                            ${category.category_name}
-                                    </option>
-                                </c:forEach>
+                            <select name ="category" class="form-select">
+                                <option value="title">제목</option>
+                                <option value="content">내용</option>
+                                <option value="nick">닉네임</option>
+                                <option value="category">카테고리</option>
                             </select>
                         </div>
+                        <div class="col-8">
+                            <input type="text" name="keyword" class="form-control" placeholder="검색할 단어를 입력하세요">
+                        </div>
                         <div class="col d-grid">
-                            <input type="submit" value="출력" class="btn btn-primary">
+                            <input type="submit" value="검색" class="btn btn-primary">
                         </div>
                     </div>
                 </form>

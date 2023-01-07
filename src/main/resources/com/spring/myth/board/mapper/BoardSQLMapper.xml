@@ -176,4 +176,40 @@
         SELECT count(*) FROM myth_comment_like WHERE comment_no = #{comment_no}
     </select>
 
+    <select id="selectByTitle" resultType="com.spring.myth.vo.BoardVo">
+        SELECT t2.* FROM (
+                             SELECT t1.* , ROWNUM AS rnum FROM (
+                                                                   SELECT nb.* FROM myth_board nb , myth_user nu
+                                                                   WHERE nb.user_no = nu.user_no AND nb.board_title LIKE '%' || #{title} || '%' ORDER BY nb.board_no DESC
+                                                               ) t1
+                         ) t2
+    </select>
+
+    <select id="selectByContent" resultType="com.spring.myth.vo.BoardVo">
+        SELECT t2.* FROM (
+                             SELECT t1.* , ROWNUM AS rnum FROM (
+                                                                   SELECT nb.* FROM myth_board nb , myth_user nu
+                                                                   WHERE nb.user_no = nu.user_no AND nb.board_content  LIKE '%' || #{content} || '%' ORDER BY nb.board_no DESC
+                                                               ) t1
+                         ) t2
+    </select>
+
+    <select id="selectByNickName" resultType="com.spring.myth.vo.BoardVo">
+        SELECT t2.* FROM (
+                             SELECT t1.* , ROWNUM AS rnum FROM (
+                                                                   SELECT nb.* FROM myth_board nb , myth_user nu
+                                                                   WHERE nb.user_no = nu.user_no AND nu.user_nickname LIKE '%' || #{user_nickname} || '%' ORDER BY nb.board_no DESC
+                                                               ) t1
+                         ) t2
+    </select>
+
+    <select id="selectByCategoryName" resultType="com.spring.myth.vo.BoardVo">
+        SELECT t2.* FROM (
+                             SELECT t1.* , ROWNUM AS rnum FROM (
+                                                                   SELECT nb.* FROM myth_board nb , myth_category nu
+                                                                   WHERE nb.category_no = nu.category_no AND nu.category_name LIKE '%' || #{category_name} || '%' ORDER BY nb.board_no DESC
+                                                               ) t1
+                         ) t2
+    </select>
+
 </mapper>

@@ -19,13 +19,28 @@ public class BoardService {
     UserSQLMapper userSQLMapper;
 
     /* 게시글 전체 출력 */
-    public ArrayList<HashMap<String, Object>> getBoardList() {
+    public ArrayList<HashMap<String, Object>> getBoardList(String category, String keyword) {
 
         int category_no = 0;
 
         ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
 
         ArrayList<BoardVo> boardVoList = boardSQLMapper.getBoardList();
+        if (category != null || keyword != null) {
+            switch (category) {
+                case "title":
+                    boardVoList = boardSQLMapper.selectByTitle(keyword);
+                    break;
+                case "content":
+                    boardVoList = boardSQLMapper.selectByContent(keyword);
+                    break;
+                case "nick":
+                    boardVoList = boardSQLMapper.selectByNickName(keyword);
+                    break;
+                case "category":
+                    boardVoList = boardSQLMapper.selectByCategoryName(keyword);
+            }
+        }
 
         for (BoardVo boardVo : boardVoList) {
             int userNo = boardVo.getUser_no();
@@ -43,11 +58,25 @@ public class BoardService {
     }
 
     /* 게시글 카테고리별 출력 */
-    public ArrayList<HashMap<String, Object>> getBoardList(int category_no) {
+    public ArrayList<HashMap<String, Object>> getBoardList(int category_no, String category, String keyword) {
 
         ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
-
         ArrayList<BoardVo> boardVoList = boardSQLMapper.getBoardCategoryList(category_no);
+
+        if (category != null || keyword != null) {
+            switch (category) {
+                case "title":
+                    boardVoList = boardSQLMapper.selectByTitle(keyword);
+                    break;
+                case "content":
+                    boardVoList = boardSQLMapper.selectByContent(keyword);
+                    break;
+                case "nick":
+                    boardVoList = boardSQLMapper.selectByNickName(keyword);
+                    break;
+            }
+        }
+
         for (BoardVo boardVo : boardVoList) {
             int userNo = boardVo.getUser_no();
             int totalLikeCount = boardSQLMapper.getTotalLikeCount(boardVo.getBoard_no());

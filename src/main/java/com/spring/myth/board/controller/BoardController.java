@@ -27,14 +27,14 @@ public class BoardController {
     BoardService boardService;
 
     @RequestMapping(value = "postMainPage", method = RequestMethod.GET)
-    public String postMainPage(Model model, @RequestParam(value = "category_no", defaultValue = "0") int category_no) {
+    public String postMainPage(Model model, @RequestParam(value = "category_no", defaultValue = "0") int category_no, String category, String keyword) {
 
-        ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();;
+        ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
 
         if (category_no != 0) {
-            dataList = boardService.getBoardList(category_no);
+            dataList = boardService.getBoardList(category_no, category, keyword);
         } else {
-            dataList = boardService.getBoardList();
+            dataList = boardService.getBoardList(category, keyword);
         }
 
         HashMap<String, Object> data = new HashMap<String, Object>();
@@ -84,7 +84,7 @@ public class BoardController {
         return "redirect:./postMainPage";
     }
 
-    @RequestMapping(value ="postReadPage", method = RequestMethod.POST)
+    @RequestMapping(value = "postReadPage", method = RequestMethod.POST)
     public String postReadPage(@RequestParam(value = "board_no", defaultValue = "0") int board_no, Model model, HttpServletRequest request) {
 
         ArrayList<ReadPageVo> readPageVo = boardService.getReadPageList(board_no);
@@ -130,10 +130,10 @@ public class BoardController {
         model.addAttribute("dataList", dataList);
 
         int totalLikeCount = boardService.getTotalLikeCount(board_no);
-        model.addAttribute("totalLikeCount",totalLikeCount);
+        model.addAttribute("totalLikeCount", totalLikeCount);
 
         UserVo sessionUser = (UserVo) request.getSession().getAttribute("sessionUser");
-        if(sessionUser != null) {
+        if (sessionUser != null) {
             //로그인을 했을때...
             int memberNo = sessionUser.getUser_no();
             BoardLikeVo boardLikeVo = new BoardLikeVo();
@@ -141,7 +141,7 @@ public class BoardController {
             boardLikeVo.setBoard_no(board_no);
 
             int myLikeCount = boardService.getMyLikeCount(boardLikeVo);
-            model.addAttribute("myLikeCount",myLikeCount);
+            model.addAttribute("myLikeCount", myLikeCount);
         }
 
         return "board/postReadPage";
@@ -149,7 +149,7 @@ public class BoardController {
     }
 
     @RequestMapping(value = "updatePostContentPage", method = RequestMethod.POST)
-    public String updatePostContentPage(@RequestParam(value = "board_no", defaultValue = "0") int board_no ,@ModelAttribute("boardVo") BoardVo param, Model model) {
+    public String updatePostContentPage(@RequestParam(value = "board_no", defaultValue = "0") int board_no, @ModelAttribute("boardVo") BoardVo param, Model model) {
 
         HashMap<String, Object> date = new HashMap<String, Object>();
 
@@ -191,14 +191,14 @@ public class BoardController {
     }
 
     @RequestMapping(value = "writeCommentPage", method = RequestMethod.POST)
-    public String writeCommentPage(@ModelAttribute("commentVo") CommentVo commentVo,Model model) {
+    public String writeCommentPage(@ModelAttribute("commentVo") CommentVo commentVo, Model model) {
 
         model.addAttribute("boardNo", commentVo.getBoard_no());
 
         return "board/writeCommentPage";
     }
 
-    @RequestMapping(value = "updateCommentPage", method=RequestMethod.POST)
+    @RequestMapping(value = "updateCommentPage", method = RequestMethod.POST)
     public String updateCommentPage(int comment_no, @ModelAttribute("commentVo") CommentVo commentVo, Model model) {
 
         HashMap<String, Object> data = boardService.getComment(comment_no);
@@ -207,7 +207,7 @@ public class BoardController {
         return "board/updateCommentPage";
     }
 
-    @RequestMapping(value = "makeError", method=RequestMethod.GET)
+    @RequestMapping(value = "makeError", method = RequestMethod.GET)
     public void makeError() throws Exception {
         throw new NullPointerException();
     }
